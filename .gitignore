@@ -1,0 +1,20 @@
+# dependencies
+node_modules/
+frontend/node_modules/
+frontend/portal-ui/node_modules/
+backend/node_modules/
+
+# build files
+build/
+frontend/portal-ui/build/
+
+# env
+.env
+
+# logs
+*.log
+
+# misc
+dist/
+coverage/
+.DS_Store
