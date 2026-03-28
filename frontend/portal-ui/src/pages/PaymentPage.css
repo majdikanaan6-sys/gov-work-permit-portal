@@ -1,0 +1,467 @@
+/* ===== CARD PREVIEW ===== */
+.card-preview {
+  background: linear-gradient(135deg, #2c7be5, #1a5edb);
+  color: white;
+  width: 100%;
+  height: 200px;
+  backface-visibility: hidden;
+  padding: 20px;
+  border-radius: 14px;
+  margin-bottom: 20px;
+  position: relative;
+}
+
+.card-number {
+  font-size: 18px;
+  letter-spacing: 2px;
+  margin: 20px 0;
+}
+
+.card-footer {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+}
+
+.card-footer span {
+  opacity: 0.8;
+}
+
+.card-footer p {
+  margin: 2px 0 0;
+  font-weight: bold;
+}
+
+.card-brand {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  width: 50px;
+}
+
+/* Chip */
+.card-chip {
+  width: 40px;
+  height: 25px;
+  background: gold;
+  border-radius: 4px;
+}
+
+/* ===== FLOATING INPUTS ===== */
+.floating-group {
+  position: relative;
+  margin-bottom: 18px;
+}
+
+.floating-group input {
+  width: 100%;
+  padding: 14px 12px;
+  border-radius: 8px;
+  border: 1px solid #d1d5db;
+  font-size: 14px;
+  outline: none;
+  transition: 0.2s;
+}
+
+.floating-group label {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  font-size: 13px;
+  color: #888;
+  background: white;
+  padding: 0 5px;
+  transition: 0.2s;
+}
+
+.floating-group input:focus + label,
+.floating-group input:not(:placeholder-shown) + label {
+  top: -8px;
+  font-size: 11px;
+  color: #2c7be5;
+  border-color: #635bff; /* 🔥 Stripe purple */
+  box-shadow: 0 0 0 2px rgba(99, 91, 255, 0.1);
+}
+
+/* ===== ERROR STATE ===== */
+input:invalid {
+  border-color: #e74c3c;
+}
+
+/* ===== BUTTON UPGRADE ===== */
+
+
+
+/* ================= CONTAINER ================= */
+.payment-container {
+  background: #f6f9fc;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px 20px;
+}
+
+/* ================= CARD ================= */
+.payment-card {
+  background: #fff;
+  width: 100%;
+  max-width: 720px;
+  padding: 30px;
+  border-radius: 16px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+  line-height: 1.5;
+  
+}
+
+/* ================= HEADINGS ================= */
+.payment-card h2 {
+  margin-bottom: 15px;
+}
+
+.payment-card h4 {
+  margin-top: 25px;
+  margin-bottom: 10px;
+}
+
+/* ================= SECURE BANNER ================= */
+.secure-banner {
+  background: #eef6f2;
+  color: #2e7d32;
+  padding: 12px 16px;
+  border-radius: 10px;
+  font-size: 14px;
+  margin-bottom: 25px;
+  text-align: center;
+}
+
+/* ================= INFO ================= */
+.payment-info p {
+  margin: 6px 0;
+}
+
+.amount {
+  font-size: 20px;
+  font-weight: bold;
+  color: #28a745;
+  margin: 10px 0 20px;
+}
+
+/* ================= FORM ================= */
+.form-group {
+  margin-bottom: 18px;
+}
+
+.form-group label {
+  display: block;
+  font-size: 13px;
+  margin-bottom: 6px;
+  color: #444;
+  font-weight: 500;
+}
+
+/* Inputs */
+input {
+  width: 100%;
+  height: 44px;
+  padding: 10px 12px;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+  font-size: 14px;
+  box-sizing: border-box;
+  outline: none;
+  transition: border 0.2s ease;
+}
+
+input:focus {
+  border-color: #2c7be5;
+}
+
+/* ================= ROW LAYOUT ================= */
+.form-row {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+.form-row input {
+  flex: 1;
+}
+
+/* ================= CARD INPUT ================= */
+.card-input-box {
+  position: relative;
+}
+
+.card-input-box input {
+  padding-right: 60px; /* space for logo */
+}
+
+/* Card logo */
+.card-logo {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 40px;
+  height: auto;
+  pointer-events: none;
+}
+
+/* ================= BUTTON ================= */
+.pay-btn {
+  width: 100%;
+  margin-top: 25px; /* spacing from billing */
+  padding: 14px;
+  border: none;
+  border-radius: 8px;
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s;
+  background: linear-gradient(135deg, #2c7be5, #1a5edb);
+  box-shadow: 0 4px 12px rgba(44,123,229,0.3);
+}
+
+.pay-btn:hover {
+  opacity: 0.95;
+  background: #574fd6;
+}
+
+.pay-btn:disabled {
+  background: #aaa;
+  cursor: not-allowed;
+}
+
+/* ================= SUCCESS MODAL ================= */
+.success-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.success-box {
+  background: white;
+  padding: 30px;
+  border-radius: 12px;
+  text-align: center;
+  animation: pop 0.3s ease;
+}
+
+@keyframes pop {
+  from { transform: scale(0.8); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+.payment-summary {
+  background: #f9fafb;
+  border-radius: 12px;
+  padding: 20px;
+  margin: 25px;
+}
+
+.summary-row,
+.summary-total {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.summary-total {
+  font-weight: 600px;
+  font-size: 16px;
+  border-top: 1px solid #e5e7eb;
+  padding-top: 10px;
+}
+
+.card-preview {
+  perspective: 1000px;
+  position: relative;
+  height: 200px;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  border-radius: 14px;
+  padding: 20px;
+  color: white;
+  margin-bottom: 20px;
+}
+
+.card-front,
+.card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 12px;
+  backface-visibility: hidden;
+  transition: transform 0.6s;
+  padding: 20px;
+  color: white;
+}
+
+.card-front {
+  background: linear-gradient(135deg, #2c7be5, #1a5edb);
+}
+
+.card-back {
+  background: linear-gradient(135deg, #1a1a1a, #333);
+  transform: rotateY(180deg);
+}
+
+.card-preview.flipped .card-front {
+  transform: rotateY(180deg);
+}
+
+.card-preview.flipped .card-back {
+  transform: rotateY(360deg);
+}
+
+.card-strip {
+  height: 40px;
+  background: black;
+  margin-bottom: 20px;
+}
+
+.cvv-box {
+  background: white;
+  color: black;
+  padding: 8px;
+  width: 80px;
+  text-align: center;
+  border-radius: 4px;
+  margin-left: auto;
+}
+
+select {
+  width: 100%;
+  height: 44px;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+  padding: 10px;
+  background: white;
+}
+
+.card-preview {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.payment-header {
+  display: flex;
+  justify-content: space-between; /* pushes apart */
+  align-items: center;
+  margin-bottom: 25px;
+  padding: 20px 40px;
+}
+
+.payment-header h2 {
+  margin: 0;
+  font-size: 26px;
+  font-weight: 600;
+  line-height: 1;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-weight: 600;
+  line-height: 1.1;
+  height: 70px;
+  
+
+  
+}
+
+header-center {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.payment-logo {
+  height: 120px;   /* 🔥 adjust size here */
+  width: auto;
+  object-fit: contain;
+  display: block;
+
+  transform: scale(1.4);   /* 🔥 zoom into actual logo */
+  transform-origin: left center;
+
+}
+.logout-btn {
+  background: #ff4d4f;
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 500;
+  align-self: center;
+  font-size: 16px;
+}
+
+.logout-btn:hover {
+  background: #d9363e;
+}
+
+.floating-group input.valid {
+  border: 1px solid #22c55e;
+  box-shadow: 0 0 0 2px rgba(34, 197, 94, 0.15);
+}
+
+.floating-group input.invalid {
+  border: 1px solid #ef4444;
+  box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.15);
+}
+
+.header-title {
+  font-size: 24px;
+  font-weight: 600;
+  margin: 0;
+  white-space: nowrap;   /* 🔥 prevents breaking */
+}
+
+/* 🔴 Error Banner */
+.payment-error {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  background: #fff5f5;
+  border: 1px solid #fca5a5;
+  color: #b91c1c;
+
+  padding: 12px 14px;
+  border-radius: 8px;
+
+  font-size: 14px;
+  font-weight: 500;
+
+  margin-bottom: 16px;
+
+  animation: fadeSlide 0.3s ease;
+}
+
+/* icon */
+.error-icon {
+  font-size: 16px;
+}
+
+/* smooth entry */
+@keyframes fadeSlide {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

@@ -1,0 +1,252 @@
+/* ============================= */
+/* 🌍 GLOBAL RESET */
+/* ============================= */
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family: Tahoma, Arial, sans-serif;
+  background: #e9ecef;
+}
+
+/* ============================= */
+/* 📄 PAGE WRAPPER */
+/* ============================= */
+.verify-page {
+  background: #f4f6f9;
+  min-height: 100vh;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  flex-direction: column;
+}
+
+.login-wrapper {
+  flex: 1;
+}
+/* ============================= */
+/* 🔷 TOP BAR */
+/* ============================= */
+.top-bar {
+  background: #1f3a5f;
+  color: #fff;
+  font-size: 14px;
+  padding: 8px 20px;
+  font-weight: bold;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.help-link {
+  cursor: pointer;
+}
+
+.help-link:hover {
+  text-decoration: underline;
+}
+
+/* ============================= */
+/* 🟦 HEADER BANNER */
+/* ============================= */
+.header-banner {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  line-height: 0; /* removes gap under image */
+}
+
+.header-banner img {
+  width: 100%;
+  height: auto;
+  display: block;
+  image-rendering: -webkit-optimize-contrast; /* Chrome/Safari */
+  image-rendering: crisp-edges;
+  object-fit: cover;    /* prevents distortion */
+  filter: contrast(1.05);
+}
+
+/* ============================= */
+/* 🔴 VERSION BAR */
+/* ============================= */
+.version-bar {
+  width: 420px;
+  margin: 15px auto 5px;
+  font-size: 12px;
+  font-weight: bold;
+  color: #cc0000;
+}
+
+.red-dot {
+  width: 10px;
+  height: 10px;
+  background: #cc0000;
+  display: inline-block;
+  margin-right: 6px;
+}
+
+/* ============================= */
+/* 📦 LOGIN PANEL */
+/* ============================= */
+.login-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-top: 5px;
+}
+
+.login-box {
+  width: 420px;
+  border: 1px solid #cfcfcf;
+  background: #fff;
+  height: 480px;
+
+  display: flex;
+  flex-direction: column;
+}
+
+/* Tabs */
+.login-tabs {
+  display: flex;
+  border-bottom: 1px solid #cfcfcf;
+}
+
+.tab {
+  flex: 1;
+  text-align: center;
+  padding: 10px 0;
+  background: #e6e6e6;
+  font-size: 13px;
+}
+
+.tab.active {
+  background: #ffffff;
+  font-weight: bold;
+}
+
+/* ============================= */
+/* 🧾 FORM */
+/* ============================= */
+.login-body {
+  flex: 1;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* 🔥 THIS spreads everything evenly */
+
+  padding: 20px 18px;
+}
+
+.form-section {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+
+.login-body label {
+  font-size: 12px;
+  font-weight: bold;
+  display: block;
+  margin-top: 10px;
+}
+
+.login-body input {
+  width: 100%;
+  height: 45px;
+  margin-top: 4px;
+  border: 1px solid #bfbfbf;
+  padding: 5px;
+  font-size: 13px;
+  box-sizing: border-box;
+}
+
+.login-body input:focus {
+  outline: none;
+  border-color: #2f74d0;
+  box-shadow: 0 0 0 1px rgba(47, 116, 208, 0.2);
+}
+
+/* ============================= */
+/* 🔘 BUTTON */
+/* ============================= */
+.login-btn {
+  width: 100%;
+  margin-top: 15px;
+  height: 36px;
+
+  background: #223a5e;
+  color: #fff;
+
+  border: none;
+  font-weight: bold;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.login-btn:hover {
+  background: #1b2f4d;
+}
+
+/* ============================= */
+/* ❗ ERROR BOX */
+/* ============================= */
+.error-box {
+  margin-top: 10px;
+  margin-bottom: 5px;
+
+  font-size: 12px;
+  color: #cc0000;
+
+  background: #fff5f5;
+  border: 1px solid #e0b4b4;
+
+  padding: 6px 8px;
+}
+
+/* ============================= */
+/* 📝 NOTE TEXT */
+/* ============================= */
+.note {
+  font-size: 13px;
+  font-family: Tahoma, Arial, sans-serif; /* 🔥 match system font */
+  color: #cc0000;
+  margin-top: auto;
+  line-height: 1.6;
+  
+}
+
+/* ============================= */
+/* 🔻 FOOTER */
+/* ============================= */
+.footer {
+  margin-top: 280px;
+  padding: 12px 0;
+  font-size: 12px;
+  text-align: center;
+  color: #000;
+
+  background-color: #e6e3df;
+  border-top: 1px solid #dcdcdc;
+}
+
+/* ============================= */
+/* 📱 RESPONSIVE */
+/* ============================= */
+@media (max-width: 480px) {
+  .top-bar {
+    font-size: 13px;
+    padding: 8px 12px;
+    
+  }
+
+  .version-bar,
+  .login-box {
+    width: 90%;
+  }
+}
+
+.form-group-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}

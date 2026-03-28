@@ -1,0 +1,65 @@
+.stepper-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 50px 0;
+  padding: 20px;
+}
+
+.step-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  flex: 1;
+}
+
+.step-circle {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: #e0e0e0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  color: #555;
+  transition: all 0.3s ease;
+  z-index: 2;
+}
+
+.step-circle.completed {
+  background-color: #28a745;
+  color: white;
+}
+
+.step-circle.active {
+  background-color: #007bff;
+  color: white;
+  transform: scale(1.1);
+}
+
+.step-circle svg {
+  font-size: 20px;
+}
+
+.step-label {
+  margin-top: 10px;
+  font-size: 13px;
+  text-align: center;
+  color: #333;
+}
+
+.step-line {
+  position: absolute;
+  top: 25px;
+  right: -50%;
+  width: 100%;
+  height: 4px;
+  background-color: #e0e0e0;
+  z-index: 1;
+}
+
+.step-line.completed {
+  background-color: #28a745;
+}
