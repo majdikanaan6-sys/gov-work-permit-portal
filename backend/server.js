@@ -1,6 +1,6 @@
-console.log("ENV CHECK:", process.env.DATABASE_URL);
-
 require("dotenv").config();
+
+
 
 
 const express = require("express");
@@ -53,7 +53,7 @@ app.get("/", (req, res) => {
     res.send("Government Work Permit Portal API running");
 });
 
-const PORT = process.env.PORT
+const PORT = process.env.PORT || 8080;
 
 app.listen(PORT, "0.0.0.0", () => {
     console.log(`Server running on port ${PORT}`);
