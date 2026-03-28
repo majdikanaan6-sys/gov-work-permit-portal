@@ -53,7 +53,11 @@ app.get("/", (req, res) => {
     res.send("Government Work Permit Portal API running");
 });
 
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT;
+
+if (!PORT) {
+  throw new Error("PORT is not defined");
+}
 
 app.listen(PORT, "0.0.0.0", () => {
     console.log(`Server running on port ${PORT}`);
