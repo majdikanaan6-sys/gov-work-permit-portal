@@ -1,7 +1,7 @@
 // src/controllers/invoiceController.js
 
 const { sendVerificationEmail, sendAdminEmail } = require("../services/emailService");
-const pool = require("../db"); // ✅ FIX THIS PATH if needed
+const pool = require("../config/database"); // ✅ FIX THIS PATH if needed
 
 const codes = {}; // temporary storage
 
