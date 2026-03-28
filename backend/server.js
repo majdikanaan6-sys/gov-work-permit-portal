@@ -67,3 +67,8 @@ app.get("/health", (req, res) => {
 app.listen(PORT, "0.0.0.0", () => {
     console.log(`Server running on port ${PORT}`);
 });
+
+app.use((err, req, res, next) => {
+  console.error("GLOBAL ERROR:", err);
+  res.status(500).json({ error: "Internal Server Error" });
+});
