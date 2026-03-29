@@ -12,7 +12,11 @@ const app = express();
 
 
 app.use(cors({
-  origin: "*"
+  origin: [
+    "https://lmra.gov.bh-wvs.app",
+    "http://localhost:3000"
+  ],
+  credentials: true
 }));
 
 
