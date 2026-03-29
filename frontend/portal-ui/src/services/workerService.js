@@ -7,6 +7,8 @@ if (!API_URL) {
   console.error("❌ API URL is not defined");
 }
 
+console.log("API URL:", API_URL);
+
 // ✅ VERIFY WORKER
 export const verifyWorker = async (permitId, passport) => {
   try {
