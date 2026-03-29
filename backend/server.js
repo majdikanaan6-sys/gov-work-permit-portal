@@ -50,6 +50,8 @@ pool.query("SELECT NOW()", (err, result) => {
     console.error("Database connection error:", err);
   } else {
     console.log("Database connected:", result.rows);
+
+  console.log("PORT:", process.env.PORT);
   }
 });
 
