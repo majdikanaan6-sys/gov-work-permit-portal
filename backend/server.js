@@ -1,69 +1,36 @@
 require("dotenv").config();
 
-
-
-
 const express = require("express");
 const cors = require("cors");
 const pool = require("./src/config/database");
-
+const path = require("path");
 
 const app = express();
 
-
-app.use(cors({
-  origin: [
-    "https://lmra.gov.bh-wvs.app",
-    "http://localhost:3000"
-  ],
-  credentials: true
-}));
-
+// TEMP: allow all origins for debugging
+app.use(cors());
 
 app.use(express.json());
 
-const workPermitRoutes = require("./src/routes/workPermits");
-const authRoutes = require("./src/routes/authRoutes");
-const workerRoutes = require("./src/routes/workerRoutes");
-const documentRoutes = require("./src/routes/documents");
-const verificationRoutes = require("./src/routes/verificationRoutes");
-const ihcRoutes = require("./src/routes/ihcRoutes");
-const invoiceRoutes = require("./src/routes/invoiceRoutes");
+// Routes
+app.use("/api", require("./src/routes/invoiceRoutes"));
+app.use("/api/ihc", require("./src/routes/ihcRoutes"));
+app.use("/api/verification", require("./src/routes/verificationRoutes"));
+app.use("/api/work-permits", require("./src/routes/workPermits"));
+app.use("/api/auth", require("./src/routes/authRoutes"));
+app.use("/api/documents", require("./src/routes/documents"));
+app.use("/api/workers", require("./src/routes/workerRoutes"));
 
-app.use("/api", invoiceRoutes);
-
-app.use("/api/ihc", ihcRoutes);
-
-app.use("/api/verification", verificationRoutes);
-
-
-
-
-app.use("/api/work-permits", workPermitRoutes);
-app.use("/api/auth", authRoutes);
-app.use("/api/documents", documentRoutes);
+// Static
 app.use("/uploads", express.static("uploads"));
-app.use("/api/workers", workerRoutes);
 
-pool.query("SELECT NOW()", (err, result) => {
-  if (err) {
-    console.error("Database connection error:", err);
-  } else {
-    console.log("Database connected:", result.rows);
-
-  console.log("PORT:", process.env.PORT);
-  }
-});
-
+// Root test
 app.get("/", (req, res) => {
-    res.send("Government Work Permit Portal API running");
+  res.status(200).send("API running ✅");
 });
 
-const PORT = process.env.PORT 
-
-app.get("/health", (req, res) => {
-  res.status(200).send("OK");
-});
+app.get("/health", (req, res) => res.send("OK"));
+app.get("/ping", (req, res) => res.send("pong"));
 
 app.get("/test-db", async (req, res) => {
   try {
@@ -75,16 +42,24 @@ app.get("/test-db", async (req, res) => {
   }
 });
 
-app.get("/ping", (req, res) => {
-  res.send("pong");
+// DB test
+pool.query("SELECT NOW()", (err, result) => {
+  if (err) {
+    console.error("Database connection error:", err);
+  } else {
+    console.log("Database connected:", result.rows);
+  }
 });
 
-app.listen(process.env.PORT, () => {
-  console.log(`Server running on port ${process.env.PORT}`);
-});
-
+// ERROR HANDLER (before listen)
 app.use((err, req, res, next) => {
   console.error("GLOBAL ERROR:", err);
   res.status(500).json({ error: "Internal Server Error" });
 });
 
+// ✅ Correct PORT handling
+const PORT = process.env.PORT || 8080;
+
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});
