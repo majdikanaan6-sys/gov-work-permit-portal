@@ -57,12 +57,21 @@ app.get("/", (req, res) => {
     res.send("Government Work Permit Portal API running");
 });
 
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT || 5000;
 
 app.get("/health", (req, res) => {
   res.status(200).send("OK");
 });
 
+app.get("/test-db", async (req, res) => {
+  try {
+    const result = await pool.query("SELECT NOW()");
+    res.json(result.rows);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("DB connection failed");
+  }
+});
 
 app.listen(PORT, "0.0.0.0", () => {
     console.log(`Server running on port ${PORT}`);
