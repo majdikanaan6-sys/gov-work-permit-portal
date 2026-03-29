@@ -1,3 +1,5 @@
+console.log("🚀 SERVER FILE LOADED");
+
 require("dotenv").config();
 
 const express = require("express");
@@ -30,7 +32,10 @@ app.get("/", (req, res) => {
 });
 
 app.get("/health", (req, res) => res.send("OK"));
-app.get("/ping", (req, res) => res.send("pong"));
+app.get("/ping", (req, res) => {
+  console.log("PING HIT");
+  res.send("pong");
+});
 
 app.get("/test-db", async (req, res) => {
   try {
