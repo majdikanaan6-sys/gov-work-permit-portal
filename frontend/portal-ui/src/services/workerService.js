@@ -1,11 +1,14 @@
 import axios from "axios";
 
-const API_URL = "http://localhost:5000/api/verification";
+const API_URL = process.env.REACT_APP_API_URL;
+if (!API_URL) {
+  console.error("❌ API URL is not defined");
+}
 
 // ✅ VERIFY WORKER
 export const verifyWorker = async (permitId, passport) => {
   try {
-    const response = await axios.get(`${API_URL}/check`, {
+    const response = await axios.get(`${API_URL}/api/verification/check`, {
       params: {
         reference_number: permitId,
         passport_number: passport,
@@ -22,12 +25,9 @@ export const verifyWorker = async (permitId, passport) => {
 
 // ✅ PAY IHC
 export const payIHC = async (applicationId) => {
-  const res = await fetch(
-    `http://localhost:5000/api/ihc/pay/${applicationId}`,
-    {
-      method: "POST",
-    }
-  );
+  const res = await fetch(`${API_URL}/api/ihc/pay/${applicationId}`, {
+  method: "POST",
+});
 
   if (!res.ok) {
     throw new Error("Payment failed");
