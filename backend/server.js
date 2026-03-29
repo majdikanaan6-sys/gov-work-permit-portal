@@ -59,7 +59,7 @@ app.get("/", (req, res) => {
     res.send("Government Work Permit Portal API running");
 });
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT 
 
 app.get("/health", (req, res) => {
   res.status(200).send("OK");
@@ -75,10 +75,9 @@ app.get("/test-db", async (req, res) => {
   }
 });
 
-app.listen(PORT, "0.0.0.0", () => {
-    console.log(`Server running on port ${PORT}`);
+app.listen(process.env.PORT, () => {
+  console.log(`Server running on port ${process.env.PORT}`);
 });
-
 
 app.use((err, req, res, next) => {
   console.error("GLOBAL ERROR:", err);
