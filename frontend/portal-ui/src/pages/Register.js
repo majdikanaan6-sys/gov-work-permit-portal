@@ -12,7 +12,7 @@ setForm({...form,[e.target.name]:e.target.value})
 const submit=async()=>{
 
 await axios.post(
-"http://localhost:5000/api/auth/register",
+"https://gov-work-permit-portal-production.up.railway.app/api/auth/register",
 form
 )
 
