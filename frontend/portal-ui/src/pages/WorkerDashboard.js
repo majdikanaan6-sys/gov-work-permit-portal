@@ -23,7 +23,20 @@ const getNotifications = (application) => {
 
   const status = application.application.status;
 
+  
+
   switch (status) {
+
+    case "SUBMITTED":
+      return [
+        {
+          id: 0,
+          message:
+            "Your application has been submitted by your sponsor. It will be reviewed in due time.",
+          type: "info",
+        },
+      ];
+      
     case "PRE_AUTHORIZED":
       return [
         {
@@ -50,6 +63,8 @@ const getNotifications = (application) => {
           type: "info",
         },
       ];
+
+      
 
     default:
       return [];
