@@ -161,7 +161,7 @@ const isCvvValid =
   <div className="payment-container">
 
     <Helmet>
-      <title>IHC Payment Page</title>
+      <title>LMRA-IHC Payment Page</title>
     </Helmet>
     
 

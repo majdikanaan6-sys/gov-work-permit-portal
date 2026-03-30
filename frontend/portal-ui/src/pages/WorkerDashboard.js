@@ -193,7 +193,7 @@ if (!reference) {
   <div className={`dashboard-container ${darkMode ? "dark" : ""}`}>
 
     <Helmet>
-  <title>Worker Dashboard</title>
+  <title>LMRA-Worker Dashboard</title>
 </Helmet>
 
 
