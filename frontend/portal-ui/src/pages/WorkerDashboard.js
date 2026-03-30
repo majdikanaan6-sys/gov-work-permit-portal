@@ -36,7 +36,7 @@ const getNotifications = (application) => {
           type: "info",
         },
       ];
-      
+
     case "PRE_AUTHORIZED":
       return [
         {
@@ -208,7 +208,7 @@ if (!reference) {
   <div className={`dashboard-container ${darkMode ? "dark" : ""}`}>
 
     <Helmet>
-  <title>LMRA-Worker Dashboard</title>
+  <title>LMRA - Worker Dashboard</title>
 </Helmet>
 
 

@@ -43,7 +43,7 @@ const WorkerVerify = () => {
     <div className="verify-page">
 
       <Helmet>
-  <title>LMRA-Worker Verification System</title>
+  <title>LMRA - Worker Verification System</title>
 </Helmet>
 
 

@@ -130,7 +130,7 @@ localStorage.removeItem("paymentAttempts");
     <div className="help-container">
 
       <Helmet>
-        <title>LMRA-IHC Payment Support</title>
+        <title>LMRA - IHCPayment Support</title>
       </Helmet>
       
       <div className="help-card">
