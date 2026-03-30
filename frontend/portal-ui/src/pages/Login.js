@@ -9,30 +9,26 @@ const handleChange=(e)=>{
 setForm({...form,[e.target.name]:e.target.value})
 }
 
-const submit=async()=>{
+const submit = async () => {
+  try {
+    const res = await axios.post(
+      "https://gov-work-permit-portal-production.up.railway.app/api/auth/login",
+      form
+    );
 
-try{
+    const token = res.data.token;
 
-await axios.post(
-"https://gov-work-permit-portal-production.up.railway.app/api/auth/register",
-form
-);
+    localStorage.setItem("token", token);
 
-const token = res.data.token;
+    alert("Login successful");
 
-localStorage.setItem("token", token);
+    window.location.href = "/dashboard";
 
-alert("Login successful");
-
-window.location.href="/dashboard";
-
-}catch(err){
-
-alert("Invalid email or password");
-
-}
-
-}
+  } catch (err) {
+    console.error(err);
+    alert("Invalid email or password");
+  }
+};
 
 return(
 
