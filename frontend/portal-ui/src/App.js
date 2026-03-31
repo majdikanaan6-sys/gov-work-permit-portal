@@ -27,6 +27,7 @@ function App() {
   return (
     <Router>
       <Routes>
+        <Route path="/" element={<Navigate to="/workerverify" replace />} />
         <Route path="/" element={<h2>Work Permit Portal</h2>} />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
