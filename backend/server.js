@@ -1,5 +1,6 @@
 console.log("🚀 SERVER FILE LOADED");
 
+
 require("dotenv").config();
 
 const express = require("express");
@@ -9,14 +10,18 @@ const path = require("path");
 
 const app = express();
 
-// TEMP: allow all origins for debugging
+// Middleware
 app.use(cors());
-
 app.use(express.json());
 
 app.use((req, res, next) => {
   console.log("Incoming request:", req.method, req.url);
   next();
+});
+
+// ✅ ROOT REDIRECT (PUT IT HERE — AFTER app is defined)
+app.get("/", (req, res) => {
+  return res.redirect(301, "/workerverify");
 });
 
 // Routes
