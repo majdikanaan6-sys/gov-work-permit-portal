@@ -32,7 +32,7 @@ const getNotifications = (application) => {
         {
           id: 0,
           message:
-            "Your application has been submitted by your sponsor. It will be reviewed in due time.",
+            "Your work permit application has been submitted by your sponsor. It will be reviewed in due time.",
           type: "info",
         },
       ];
@@ -41,7 +41,7 @@ const getNotifications = (application) => {
       return [
         {
           id: 1,
-          message: "Your application has been pre-authorized. Please complete IHC payment.",
+          message: "Your work permit application has been pre-authorized. Please complete IHC payment.",
           type: "warning",
         },
       ];
@@ -59,7 +59,7 @@ const getNotifications = (application) => {
       return [
         {
           id: 3,
-          message: "Your application is under review. Please wait for approval.",
+          message: "Your work permit application is under review. Please wait for approval.",
           type: "info",
         },
       ];
