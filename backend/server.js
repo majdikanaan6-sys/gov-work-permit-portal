@@ -19,11 +19,6 @@ app.use((req, res, next) => {
   next();
 });
 
-// ✅ ROOT REDIRECT (PUT IT HERE — AFTER app is defined)
-app.get("/", (req, res) => {
-  return res.redirect(301, "/workerverify");
-});
-
 // Routes
 app.use("/api", require("./src/routes/invoiceRoutes"));
 app.use("/api/ihc", require("./src/routes/ihcRoutes"));
