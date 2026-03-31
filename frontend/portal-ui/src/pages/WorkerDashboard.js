@@ -32,7 +32,7 @@ const getNotifications = (application) => {
         {
           id: 0,
           message:
-            "Your work permit application has been submitted by your sponsor. It will be reviewed in due time.",
+            "Your work permit application has been submitted by your sponsor. Application will be reviewed in due time.",
           type: "info",
         },
       ];
