@@ -1,4 +1,4 @@
-console.log("🚀 SERVER FILE LOADED");
+console.log("🚀 NEW DEPLOY VERSION 2");
 
 
 require("dotenv").config();
