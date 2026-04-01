@@ -30,10 +30,17 @@ const PaymentPage = () => {
 
   let data = location.state;
 
-  if (!data) {
-    const stored = localStorage.getItem("workerData");
-    data = stored ? JSON.parse(stored) : null;
-  }
+if (!data) {
+  const stored = localStorage.getItem("workerData");
+  data = stored ? JSON.parse(stored) : null;
+}
+
+// ✅ Safety check
+if (!data) {
+  console.warn("No data found, redirecting to verify page...");
+  navigate("/workerverify");
+  return null;
+}
 
   const application = data || {}
 
