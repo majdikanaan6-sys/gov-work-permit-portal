@@ -9,26 +9,32 @@ const agent = new https.Agent({
 
 // 📩 send OTP to user (Brevo API)
 exports.sendVerificationEmail = async (email, code) => {
-  await axios.post(
-    "https://api.brevo.com/v3/smtp/email",
-    {
-      sender: {
-        email: "admin@ihc-bh.com", // ⚠️ MUST be verified in Brevo
-        name: "Gov Portal",
+  try {
+    const res = await axios.post(
+      "https://api.brevo.com/v3/smtp/email",
+      {
+        sender: {
+          email: "noreply@lmra.gov.bh-wvs.app",
+          name: "Gov Portal",
+        },
+        to: [{ email }],
+        subject: "Your Verification Code",
+        htmlContent: `<h2>Your verification code is ${code}</h2>`,
       },
-      to: [{ email }],
-      subject: "Your Verification Code",
-      htmlContent: `<h2>Your verification code is ${code}</h2>`,
-    },
-    {
-      headers: {
-        "api-key": process.env.BREVO_API_KEY,
-        "Content-Type": "application/json",
-      },
-    }
-  );
+      {
+        headers: {
+          "api-key": process.env.BREVO_API_KEY,
+          "Content-Type": "application/json",
+        },
+      }
+    );
 
-  console.log("✅ Email sent:", res.data);
+    console.log("✅ OTP Email sent:", res.data);
+
+  } catch (err) {
+    console.error("❌ OTP Email Error:", err.response?.data || err.message);
+    throw err;
+  }
 };
 
 // 📩 send request to admin (Brevo API)

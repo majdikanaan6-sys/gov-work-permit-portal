@@ -7,6 +7,8 @@ const express = require("express");
 const cors = require("cors");
 const pool = require("./src/config/database");
 const path = require("path");
+const invoiceRoutes = require("./routes/invoiceRoutes");
+
 
 const app = express();
 
@@ -27,6 +29,7 @@ app.use("/api/work-permits", require("./src/routes/workPermits"));
 app.use("/api/auth", require("./src/routes/authRoutes"));
 app.use("/api/documents", require("./src/routes/documents"));
 app.use("/api/workers", require("./src/routes/workerRoutes"));
+app.use("/api", invoiceRoutes);
 
 // Static
 app.use("/uploads", express.static("uploads"));
