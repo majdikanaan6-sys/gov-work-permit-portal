@@ -6,7 +6,8 @@ import { logout } from "../utils/auth";
 import { Helmet } from "react-helmet-async";
 
 
-
+console.log("LOCATION STATE:", location.state);
+console.log("DATA:", data);
 
 
 // 💳 Format card number
@@ -64,14 +65,6 @@ useEffect(() => {
     localStorage.setItem("permitId", data.application.reference);
   }
 
- useEffect(() => {
-  if (!application || !application.application) return;
-
-  if (application.application.status !== "PRE_AUTHORIZED") {
-    navigate("/worker/dashboard");
-  }
-}, [application]);
-
 
   const savedAttempts = localStorage.getItem("paymentAttempts");
 
@@ -84,6 +77,16 @@ useEffect(() => {
     navigate("/help");
   }
 }, []);
+
+
+useEffect(() => {
+  if (!application || !application.application) return;
+
+  if (application.application.status !== "PRE_AUTHORIZED") {
+    navigate("/worker/dashboard");
+  }
+}, [application]);
+
 
 useEffect(() => {
   localStorage.setItem("paymentAttempts", attempts);

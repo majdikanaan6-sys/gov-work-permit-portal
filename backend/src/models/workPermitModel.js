@@ -32,6 +32,8 @@ const createApplication = async (application) => {
             ]
         );
 
+        
+
         return result.rows[0];
 
     } catch (err) {

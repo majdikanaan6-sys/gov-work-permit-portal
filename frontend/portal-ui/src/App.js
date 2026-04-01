@@ -34,6 +34,7 @@ function App() {
         <Route path="/employer/dashboard" element={<EmployerDashboard />} />
         <Route path="/workerverify" element={<WorkerVerify />} />
         <Route path="/worker/dashboard" element={<WorkerDashboard />} />
+        <Route path="/worker/payment" element={<PaymentPage />} />
         <Route path="*" element={<Navigate to="/workerverify" replace />} />
 
         {/* ✅ Protected Payment Route */}

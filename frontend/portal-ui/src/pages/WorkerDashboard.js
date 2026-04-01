@@ -390,11 +390,12 @@ if (!reference) {
     <button
       className="btn-primary"
       onClick={() =>
-        navigate("/worker/paymentpage", { state: application })
+        navigate("/worker/payment", { state: application })
       }
     >
       Pay Now
     </button>
+    
   ) : application.application?.status === "PAYMENT_PENDING" ? (
     <button className="btn-disabled" disabled>
       Invoice Requested
