@@ -64,7 +64,7 @@ useEffect(() => {
   }
 
   if (application?.application?.status !== "PRE_AUTHORIZED") {
-  navigate("/dashboard");
+  navigate("worker/dashboard");
 }
   const savedAttempts = localStorage.getItem("paymentAttempts");
 
