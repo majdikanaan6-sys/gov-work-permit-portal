@@ -13,19 +13,21 @@ import WorkerVerify from "./pages/WorkerVerify";
 
 // ✅ Payment Guard (must be OUTSIDE component or above return)
 const PaymentGuard = ({ children }) => {
-  
+  const stored = localStorage.getItem("workerData");
+  const parsed = stored ? JSON.parse(stored) : null;
 
-  if (!stored || !stored.application) {
+  console.log("Guard data:", parsed);
+
+  if (!parsed || !parsed.application) {
     return <Navigate to="/workerverify" replace />;
   }
 
-  if (stored.application.status !== "PRE_AUTHORIZED") {
+  if (parsed.application.status !== "PRE_AUTHORIZED") {
     return <Navigate to="/worker/dashboard" replace />;
   }
 
   return children;
 };
-
 function App() {
    return (
     <Router>
