@@ -1,4 +1,4 @@
-console.log("Guard data:", stored);
+
 
 
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
@@ -13,7 +13,7 @@ import WorkerVerify from "./pages/WorkerVerify";
 
 // ✅ Payment Guard (must be OUTSIDE component or above return)
 const PaymentGuard = ({ children }) => {
-  const stored = JSON.parse(localStorage.getItem("workerData"));
+  
 
   if (!stored || !stored.application) {
     return <Navigate to="/workerverify" replace />;
