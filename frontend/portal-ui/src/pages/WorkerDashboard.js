@@ -390,7 +390,7 @@ if (!reference) {
     <button
       className="btn-primary"
       onClick={() =>
-        navigate("/worker/payment", { state: application })
+        navigate("/worker/paymentpage", { state: application })
       }
     >
       Pay Now
