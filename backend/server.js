@@ -7,7 +7,7 @@ const express = require("express");
 const cors = require("cors");
 const pool = require("./src/config/database");
 const path = require("path");
-const invoiceRoutes = require("./routes/invoiceRoutes");
+const invoiceRoutes = require("./src/routes/invoiceRoutes");
 
 
 const app = express();
