@@ -57,7 +57,7 @@ useEffect(() => {
     setLoading(true);
     setError("");
 
-    const res = await fetch("http://localhost:5000/api/send-code", {
+    const res = await fetch(`${API_URL}/api/verify-code`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -91,7 +91,7 @@ const handleVerifyAndRequest = async (e) => {
     setLoading(true);
     setError("");
 
-    const res = await fetch("http://localhost:5000/api/verify-code", {
+    const res = await fetch(`${API_URL}/api/send-code`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
