@@ -6,8 +6,6 @@ import { logout } from "../utils/auth";
 import { Helmet } from "react-helmet-async";
 
 
-console.log("LOCATION STATE:", location.state);
-console.log("DATA:", data);
 
 
 // 💳 Format card number
