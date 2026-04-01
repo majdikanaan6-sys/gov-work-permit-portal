@@ -9,6 +9,25 @@ if (!API_URL) {
 
 console.log("API URL:", API_URL);
 
+
+// ✅ SEND OTP CODE
+export const sendCode = async (email) => {
+  console.log("🚀 Sending request to:", `${API_URL}/api/send-code`);
+
+  try {
+    const response = await axios.post(`${API_URL}/api/send-code`, {
+      email,
+    });
+
+    console.log("✅ Response:", response.data);
+    return response.data;
+
+  } catch (error) {
+    console.error("❌ Send code error:", error.response?.data || error.message);
+    throw error;
+  }
+};
+
 // ✅ VERIFY WORKER
 export const verifyWorker = async (permitId, passport) => {
   try {
