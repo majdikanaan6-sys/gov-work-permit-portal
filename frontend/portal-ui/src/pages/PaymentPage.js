@@ -28,7 +28,8 @@ const detectCardType = (number) => {
 const PaymentPage = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const data = location.state;
+
+  let data = location.state;
 
   if (!data) {
     const stored = localStorage.getItem("workerData");
@@ -63,9 +64,15 @@ useEffect(() => {
     localStorage.setItem("permitId", data.application.reference);
   }
 
-  if (application?.application?.status !== "PRE_AUTHORIZED") {
-  navigate("worker/dashboard");
-}
+ useEffect(() => {
+  if (!application || !application.application) return;
+
+  if (application.application.status !== "PRE_AUTHORIZED") {
+    navigate("/worker/dashboard");
+  }
+}, [application]);
+
+
   const savedAttempts = localStorage.getItem("paymentAttempts");
 
   if (savedAttempts) {
