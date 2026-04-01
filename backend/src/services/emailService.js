@@ -27,6 +27,8 @@ exports.sendVerificationEmail = async (email, code) => {
       },
     }
   );
+
+  console.log("✅ Email sent:", res.data);
 };
 
 // 📩 send request to admin (Brevo API)
