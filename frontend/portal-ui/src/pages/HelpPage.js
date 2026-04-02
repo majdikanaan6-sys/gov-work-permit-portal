@@ -34,9 +34,15 @@ export default function HelpPage() {
 
   const isEmailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
-  const location = useLocation();
-  const permitId =
+const location = useLocation();
+
+const permitId =
+  location.state?.application?.reference ||
+  location.state?.permitId ||
   localStorage.getItem("permitId");
+
+console.log("📦 PERMIT ID BEING SENT:", permitId);
+
   useEffect(() => {
   if (permitId) {
     localStorage.setItem("permitId", permitId);

@@ -71,6 +71,19 @@ await pool.query(
   [permitId]
 );
 
+console.log("🔍 Updating status for permitId:", permitId);
+
+const result = await pool.query(
+  `
+  UPDATE work_permit_applications
+  SET status = 'PAYMENT_PENDING'
+  WHERE reference_number = $1
+  RETURNING *
+  `,
+  [permitId]
+);
+
+console.log("✅ UPDATE RESULT:", result.rows);
     // ✅ Send admin email
     await sendAdminEmail(email, permitId);
 
