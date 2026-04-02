@@ -82,6 +82,7 @@ const WorkerDashboard = () => {
   const [darkMode, setDarkMode] = useState(false);
   const [notifications, setNotifications] = useState([]);
   const [showNotif, setShowNotif] = useState(false);
+  const [loading, setLoading] = useState(true);
   
   
 
@@ -115,7 +116,15 @@ if (!reference) {
 
      const res = await axios.get(
   `${process.env.REACT_APP_API_URL}/api/workers/application/reference/${reference}`
+  
 );
+
+// 🚨 BLOCK BAD RESPONSE
+if (!res.data || typeof res.data !== "object") {
+  console.error("❌ API returned HTML, ignoring...");
+  return; // DO NOT overwrite state
+}
+
 
      setApplication(res.data);
 localStorage.setItem("workerData", JSON.stringify(res.data));
