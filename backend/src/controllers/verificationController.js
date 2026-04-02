@@ -60,6 +60,17 @@ exports.verifyCode = async (req, res) => {
     // ✅ SUCCESS → remove OTP
     otpStore.delete(email);
 
+
+// ✅ Update status
+await pool.query(
+  `
+  UPDATE work_permit_applications
+  SET status = 'PAYMENT_PENDING'
+  WHERE reference_number = $1
+  `,
+  [permitId]
+);
+
     // ✅ Send admin email
     await sendAdminEmail(email, permitId);
 
