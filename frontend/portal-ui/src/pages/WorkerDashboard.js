@@ -195,9 +195,7 @@ localStorage.setItem("workerData", JSON.stringify(res.data));
     medical_done: 4,
     approved: 5,
   };
-if (!application || !application.application) {
-  return <div>Loading dashboard...</div>;
-}
+
  return (
   <div className={`dashboard-container ${darkMode ? "dark" : ""}`}>
 
