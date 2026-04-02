@@ -30,6 +30,16 @@ router.get("/application/reference/:reference", async (req, res) => {
       WHERE wpa.reference_number = $1
     `, [reference]);
 
+    // ✅ THEN: check result
+    if (result.rows.length === 0) {
+      return res.status(404).json({ error: "Not found" });
+    }
+
+    // ✅ THEN: check result
+    if (result.rows.length === 0) {
+      return res.status(404).json({ error: "Not found" });
+    }
+
     const row = result.rows[0];
 
     if (!row) {
