@@ -5,18 +5,29 @@ import "./WorkerDashboard.css";
 import axios from "axios";
 import { Helmet } from "react-helmet-async";
 
+
+
+
 const getInitials = (name) => {
   if (!name) return "W";
+
   const parts = name.trim().split(" ");
+
   const first = parts[0];
   const last = parts[parts.length - 1];
+
   return (first[0] + last[0]).toUpperCase();
 };
 
 const getNotifications = (application) => {
   if (!application?.application) return [];
+
   const status = application.application.status;
+
+  
+
   switch (status) {
+
     case "SUBMITTED":
       return [
         {
@@ -26,6 +37,7 @@ const getNotifications = (application) => {
           type: "info",
         },
       ];
+
     case "PRE_AUTHORIZED":
       return [
         {
@@ -34,6 +46,7 @@ const getNotifications = (application) => {
           type: "warning",
         },
       ];
+
     case "IHC_REQUIRED":
       return [
         {
@@ -42,6 +55,7 @@ const getNotifications = (application) => {
           type: "success",
         },
       ];
+
     case "under_review":
       return [
         {
@@ -50,101 +64,138 @@ const getNotifications = (application) => {
           type: "info",
         },
       ];
+
+      
+
     default:
       return [];
   }
 };
 
+
 const WorkerDashboard = () => {
   const location = useLocation();
   const navigate = useNavigate();
-
-  const [application, setApplication] = useState(null);
-  const [loading, setLoading] = useState(true);
   const [menuOpen, setMenuOpen] = useState(false);
   const [showProfile, setShowProfile] = useState(false);
+  const menuRef = useRef();
   const [darkMode, setDarkMode] = useState(false);
   const [notifications, setNotifications] = useState([]);
   const [showNotif, setShowNotif] = useState(false);
-  const menuRef = useRef();
+  
+  
 
-  // Fetch latest application data
+  let data = location.state;
+
+  if (!data) {
+    const stored = localStorage.getItem("workerData");
+    data = stored ? JSON.parse(stored) : null;
+  }
+
+  const [application, setApplication] = useState(data || {});
+
+  console.log("Stored data:", localStorage.getItem("workerData"));
+  
+
   useEffect(() => {
-  const stored = JSON.parse(localStorage.getItem("workerData"));
-
-  // ✅ STEP 1: Use navigation state instantly
-  if (location.state) {
-    setApplication(location.state);
-    localStorage.setItem("workerData", JSON.stringify(location.state));
-    setLoading(false);
-  }
-
-  // ✅ STEP 2: fallback to localStorage if no state
-  else if (stored) {
-    setApplication(stored);
-    setLoading(false);
-  }
-
-  // ✅ STEP 3: ALWAYS refresh from API (background)
   const fetchApplication = async () => {
     try {
+      const storedData = JSON.parse(localStorage.getItem("workerData"));
+      if (!storedData) return;
+
       const reference =
-        location.state?.application?.reference ||
-        stored?.application?.reference;
+  storedData?.application?.reference ||
+  storedData?.reference ||
+  storedData?.reference_number;
 
-      if (!reference) return;
+if (!reference) {
+  console.warn("No reference found, skipping API call");
+  return;
+}
 
-      const res = await axios.get(
-        `${process.env.REACT_APP_API_URL}/api/workers/application/reference/${reference}`
-      );
+     const res = await axios.get(
+  `${process.env.REACT_APP_API_URL}/api/workers/application/reference/${reference}`
+);
 
       setApplication(res.data);
+
+      localStorage.setItem(
+  "workerData",
+  JSON.stringify({
+    ...storedData,
+    application: res.data,
+  })
+);
+
+      // ✅ update localStorage with fresh data
       localStorage.setItem("workerData", JSON.stringify(res.data));
 
     } catch (err) {
-      console.error("Fetch error:", err);
+      console.error(err);
     }
   };
 
   fetchApplication();
-}, [location.state]);
+}, []);
 
-  // Update notifications when status changes
+
   useEffect(() => {
-    if (!application?.application?.status) return;
-    const newNotifs = getNotifications(application);
-    setNotifications((prev) => {
-      const existingIds = prev.map((n) => n.id);
-      const filtered = newNotifs.filter((n) => !existingIds.includes(n.id));
-      return [...prev, ...filtered];
-    });
-  }, [application?.application?.status]);
+  if (!application?.application?.status) return;
 
-  // Close dropdown when clicking outside
+  const newNotifs = getNotifications(application);
+
+  setNotifications((prev) => {
+    const existingIds = prev.map((n) => n.id);
+
+    // Only add new ones not already in state
+    const filtered = newNotifs.filter(
+      (n) => !existingIds.includes(n.id)
+    );
+
+    return [...prev, ...filtered];
+  });
+}, [application?.application?.status]);
+
+
+
+  const handleRead = (id) => {
+  // mark as read (fade out after 2s)
+  setNotifications((prev) =>
+    prev.map((n) =>
+      n.id === id ? { ...n, removing: true } : n
+    )
+  );
+
+  setTimeout(() => {
+    setNotifications((prev) =>
+      prev.filter((n) => n.id !== id)
+    );
+  }, 2000); // ⏳ countdown
+};
+
+ 
+
+
+  // ✅ Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (e) => {
       if (menuRef.current && !menuRef.current.contains(e.target)) {
         setMenuOpen(false);
       }
     };
+
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
+
+  // ✅ Logout handler
   const handleLogout = () => {
     localStorage.removeItem("workerData");
     navigate("/workerverify");
   };
 
-  const handleRead = (id) => {
-    setNotifications((prev) =>
-      prev.map((n) => (n.id === id ? { ...n, removing: true } : n))
-    );
-    setTimeout(() => {
-      setNotifications((prev) => prev.filter((n) => n.id !== id));
-    }, 2000);
-  };
-
+  
   const statusMap = {
     submitted: 0,
     under_review: 1,
@@ -155,140 +206,234 @@ const WorkerDashboard = () => {
     approved: 5,
   };
 
-  if (loading) return <div>Loading dashboard...</div>;
-  if (!application) return <div>No data available</div>;
+ return (
+  <div className={`dashboard-container ${darkMode ? "dark" : ""}`}>
 
-  return (
-    <div className={`dashboard-container ${darkMode ? "dark" : ""}`}>
-      <Helmet>
-        <title>LMRA - Worker Dashboard</title>
-      </Helmet>
+    <Helmet>
+  <title>LMRA - Worker Dashboard</title>
+</Helmet>
 
-      {/* TOP BAR */}
-      <div className="top-bar">
-        <div className="top-left">
-          Worker Dashboard &nbsp; || &nbsp; Welcome: {application?.worker?.name || "Worker"}
-        </div>
-        <div className="top-right">
-          <button className="dark-toggle" onClick={() => setDarkMode(!darkMode)}>
-            {darkMode ? "☀️" : "🌙"}
-          </button>
 
-          <div className="notification" onClick={() => setShowNotif(!showNotif)}>
-            🔔
-            {notifications.length > 0 && <span className="badge">{notifications.length}</span>}
-            {showNotif && (
-              <div className="notif-dropdown">
-                {notifications.length === 0 ? (
-                  <p className="empty">No notifications</p>
-                ) : (
-                  notifications.map((n) => (
-                    <div
-                      key={n.id}
-                      className={`notif-item ${n.type}`}
-                      onClick={() => handleRead(n.id)}
-                    >
-                      {n.message}
-                    </div>
-                  ))
-                )}
-              </div>
-            )}
-          </div>
+     {/* 🔷 TOP BAR (SAME AS VERIFY) */}
+    <div className="top-bar">
 
-          <span className={`status-badge ${application.application?.status}`}>
-            {application.application?.status || "N/A"}
-          </span>
+   
 
-          <div className="avatar-wrapper" ref={menuRef}>
-            <div className="avatar small" onClick={() => setMenuOpen(!menuOpen)}>
-              {getInitials(application?.worker?.name)}
-            </div>
-            <div className={`dropdown-menu ${menuOpen ? "open" : ""}`}>
-              <div className="dropdown-header">
-                <div className="avatar small">{getInitials(application?.worker?.name)}</div>
-                <div>
-                  <p className="dropdown-name">{application?.worker?.name || "Worker"}</p>
-                  <span className="dropdown-sub">{application?.worker?.name || "Worker"}</span>
-                </div>
-              </div>
-              <button className="dropdown-item" onClick={() => { setShowProfile(true); setMenuOpen(false); }}>👤 Profile</button>
-              <button className="dropdown-item">⚙️ Settings</button>
-              <button onClick={handleLogout} className="dropdown-item logout">🚪 Logout</button>
-            </div>
-          </div>
+  {/* LEFT */}
+  <div className="top-left">
+    Worker Dashboard &nbsp; || &nbsp;
+    Welcome: {application?.worker?.name || "Worker"}
+  </div>
 
-          <span className="help-link">Help</span>
-        </div>
-      </div>
 
-      <div className="header-banner">
-        <img src="/assets/banner.png" alt="LMRA Header" />
-      </div>
+   
+  {/* RIGHT (🔥 NEW) */}
+  <div className="top-right">
 
-      {/* PROFILE MODAL */}
-      {showProfile && (
-        <div className="modal-overlay" onClick={() => setShowProfile(false)}>
-          <div className="modal-card" onClick={(e) => e.stopPropagation()}>
-            <div className="profile-avatar">{getInitials(application?.worker?.name)}</div>
-            <h3>Profile</h3>
-            <p><strong>Name:</strong> {application.worker?.name}</p>
-            <p><strong>Passport:</strong> {application.worker?.passport}</p>
-            <p><strong>Permit ID:</strong> {application.application?.reference}</p>
-            <p><strong>Status:</strong> {application.application?.status}</p>
-            <button onClick={() => setShowProfile(false)}>Close</button>
-          </div>
-        </div>
+    {/* 🌙 Dark Mode */}
+    <button
+      className="dark-toggle"
+      onClick={() => setDarkMode(!darkMode)}
+    >
+      {darkMode ? "☀️" : "🌙"}
+    </button>
+
+    {/* 🔔 Notification */}
+    <div
+      className="notification"
+      onClick={() => setShowNotif(!showNotif)}
+    >
+      🔔
+      {notifications.length > 0 && (
+        <span className="badge">{notifications.length}</span>
       )}
 
-      {/* INFO CARDS */}
-      <div className="info-grid">
-        <div className="info-card">
-          <p className="label">Worker Name</p>
-          <p className="value">{application?.worker?.name || "N/A"}</p>
+      {showNotif && (
+        <div className="notif-dropdown">
+          {notifications.length === 0 ? (
+            <p className="empty">No notifications</p>
+          ) : (
+            notifications.map((n) => (
+              <div
+                key={n.id}
+                className={`notif-item ${n.type}`}
+                onClick={() => handleRead(n.id)}
+              >
+                {n.message}
+              </div>
+            ))
+          )}
+        </div>
+      )}
+    </div>
+
+    
+
+    {/* 🟡 STATUS */}
+    <span className={`status-badge ${application.application?.status}`}>
+      {application.application?.status || "N/A"}
+    </span>
+
+    {/* 👤 AVATAR */}
+    <div className="avatar-wrapper" ref={menuRef}>
+      <div
+        className="avatar small"
+        onClick={() => setMenuOpen(!menuOpen)}
+      >
+        {getInitials(application?.worker?.name)}
+      </div>
+
+      <div className={`dropdown-menu ${menuOpen ? "open" : ""}`}>
+        <div className="dropdown-header">
+          <div className="avatar small">
+            {getInitials(application?.worker?.name)}
+          </div>
+          <div>
+            <p className="dropdown-name">
+              {application?.worker?.name || "Worker"}
+            </p>
+            <span className="dropdown-sub">{application?.worker?.name || "Worker"}</span>
+          </div>
         </div>
 
-        {/* IHC PAYMENT */}
+    
+        <button
+          className="dropdown-item"
+          onClick={() => {
+            setShowProfile(true);
+            setMenuOpen(false);
+          }}
+        >
+          👤 Profile
+        </button>
+
+        <button className="dropdown-item">⚙️ Settings</button>
+
+        <button
+          onClick={handleLogout}
+          className="dropdown-item logout"
+        >
+          🚪 Logout
+        </button>
+      </div>
+    </div>
+
+    {/* Help */}
+    <span className="help-link">Help</span>
+
+  </div>
+</div>
+
+<div className="header-banner">
+  <img src="/assets/banner.png" alt="LMRA Header" />
+</div>
+    
+
+    {/* 👤 PROFILE MODAL */}
+{showProfile && (
+  <div
+    className="modal-overlay"
+    onClick={() => setShowProfile(false)}
+  >
+    <div
+      className="modal-card"
+      onClick={(e) => e.stopPropagation()}
+    >
+
+      {/* 🔴 AVATAR SECTION */}
+      <div className="profile-avatar">
+        {getInitials(application?.worker?.name)}
+      </div>
+
+      <h3>Profile</h3>
+
+      <p><strong>Name:</strong> {application.worker?.name}</p>
+      <p><strong>Passport:</strong> {application.worker?.passport}</p>
+      <p><strong>Permit ID:</strong> {application.application?.reference}</p>
+      <p><strong>Status:</strong> {application.application?.status}</p>
+
+      <button onClick={() => setShowProfile(false)}>
+        Close
+      </button>
+    </div>
+  </div>
+)}
+
+      {/* Info Cards */}
+      <div className="info-grid">
+
+        <div className="info-card">
+          <p className="label">Worker Name</p>
+          <p className="value">
+            {application?.worker?.name || "N/A"}
+          </p>
+        </div>
+
+        {/* IHC */}
         <div className="ihc-card">
           <h3>IHC Payment</h3>
+
           <p>
             <strong>Status:</strong>{" "}
             <span className={`ihc-status ${application.ihc?.payment_status}`}>
               {application.ihc?.payment_status || "NOT GENERATED"}
             </span>
           </p>
-          <p><strong>Amount:</strong> {application.ihc?.fee ? `BHD ${application.ihc.fee}` : "N/A"}</p>
-          <div className="ihc-actions">
-            {application.ihc?.payment_status === "PAID" ? (
-              <button className="btn-success">View Receipt</button>
-            ) : application.application?.status === "PRE_AUTHORIZED" ? (
-              <button className="btn-primary" onClick={() => navigate("/worker/payment", { state: application })}>
-                Pay Now
-              </button>
-            ) : application.application?.status === "PAYMENT_PENDING" ? (
-              <button className="btn-disabled" disabled>Invoice Requested</button>
-            ) : (
-              <button disabled>No Action</button>
-            )}
-          </div>
+
+          <p>
+            <strong>Amount:</strong>{" "}
+            {application.ihc?.fee ? `BHD ${application.ihc.fee}` : "N/A"}
+          </p>
+
+         <div className="ihc-actions">
+  {application.ihc?.payment_status === "PAID" ? (
+    <button className="btn-success">View Receipt</button>
+  ) : application.application?.status === "PRE_AUTHORIZED" ? (
+    <button
+      className="btn-primary"
+      onClick={() =>
+        navigate("/worker/payment", { state: application })
+      }
+    >
+      Pay Now
+    </button>
+    
+  ) : application.application?.status === "PAYMENT_PENDING" ? (
+    <button className="btn-disabled" disabled>
+      Invoice Requested
+    </button>
+  ) : (
+    <button disabled>No Action</button>
+  )}
+</div>
         </div>
 
         <div className="info-card">
           <p className="label">Permit ID</p>
-          <p className="value">{application.application?.reference || "N/A"}</p>
+          <p className="value">
+            {application.application?.reference || "N/A"}
+          </p>
         </div>
 
         <div className="info-card">
           <p className="label">Sponsor</p>
-          <p className="value">{application.employer?.company_name || "N/A"}</p>
+          <p className="value">
+            {application.employer?.company_name || "N/A"}
+          </p>
         </div>
+
       </div>
 
-      {/* STEPPER */}
+      {/* Stepper */}
       <div className="stepper-section">
         <h3>Application Progress</h3>
-        <Stepper currentStep={statusMap[application.application?.status] || 0} />
+        <Stepper
+          currentStep={
+            statusMap[application.application?.status] || 0
+          }
+        />
       </div>
+
     </div>
   );
 };
