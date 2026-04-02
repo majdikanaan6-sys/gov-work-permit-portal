@@ -5,9 +5,10 @@ const pool = require("../config/database")
 
 const { getApplicationByEmail } = require("../controllers/workerController");
 
-router.get("/application/reference/:ref", async (req, res) => {
+router.get("/application/reference/:reference", async (req, res) => {
   try {
     const { ref } = req.params;
+    console.log("✅ HIT:", reference);
 
     const result = await pool.query(`
       SELECT 
