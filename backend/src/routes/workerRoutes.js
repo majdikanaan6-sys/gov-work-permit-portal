@@ -27,7 +27,7 @@ router.get("/application/reference/:reference", async (req, res) => {
       LEFT JOIN employers e ON e.id = wpa.employer_id
       LEFT JOIN ihc_payments i ON i.application_id = wpa.id
       WHERE wpa.reference_number = $1
-    `, [ref]);
+    `, [reference]);
 
     const row = result.rows[0];
 
