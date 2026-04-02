@@ -9,7 +9,7 @@ router.get("/application/reference/:reference", async (req, res) => {
   try {
     const { reference } = req.params;
     console.log("✅ HIT:", reference);
-    console.log("DB RESULT:", result.rows);
+    
 
     const result = await pool.query(`
       SELECT 
@@ -30,15 +30,14 @@ router.get("/application/reference/:reference", async (req, res) => {
       WHERE wpa.reference_number = $1
     `, [reference]);
 
-    // ✅ THEN: check result
-    if (result.rows.length === 0) {
-      return res.status(404).json({ error: "Not found" });
-    }
+    console.log("DB RESULT:", result.rows);
 
     // ✅ THEN: check result
     if (result.rows.length === 0) {
       return res.status(404).json({ error: "Not found" });
     }
+
+    
 
     const row = result.rows[0];
 
