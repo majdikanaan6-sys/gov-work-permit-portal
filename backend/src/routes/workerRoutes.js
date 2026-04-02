@@ -9,6 +9,7 @@ router.get("/application/reference/:reference", async (req, res) => {
   try {
     const { reference } = req.params;
     console.log("✅ HIT:", reference);
+    console.log("DB RESULT:", result.rows);
 
     const result = await pool.query(`
       SELECT 

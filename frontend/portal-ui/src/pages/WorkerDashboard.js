@@ -195,7 +195,17 @@ localStorage.setItem("workerData", JSON.stringify(res.data));
     medical_done: 4,
     approved: 5,
   };
+<<<<<<< HEAD
 
+=======
+if (loading) {
+  return <div>Loading dashboard...</div>;
+}
+
+if (!application?.application) {
+  return <div>No application data found</div>;
+}
+>>>>>>> 1c71011 (sync dash)
  return (
   <div className={`dashboard-container ${darkMode ? "dark" : ""}`}>
 
