@@ -53,7 +53,7 @@ useEffect(() => {
   const locked = localStorage.getItem("paymentLocked");
 
   if (locked !== "true") {
-    navigate("/worker/dashboard");
+    navigate("/worker/dashboard", { state: { refresh: true } });
   }
 }, []);
 
