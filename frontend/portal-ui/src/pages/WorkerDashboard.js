@@ -123,10 +123,12 @@ const WorkerDashboard = () => {
       const res = await axios.get(
         `${process.env.REACT_APP_API_URL}/api/workers/application/reference/${reference}`
       );
+      console.log("🌐 FULL RESPONSE:", res);
 
       // 🚨 BLOCK BAD RESPONSE
       if (!res.data || typeof res.data !== "object") {
-        console.error("❌ API returned HTML, ignoring...");
+        console.error("❌ BAD RESPONSE URL:", res.config.url);
+  console.error("❌ RESPONSE:", res.data);
         setLoading(false); // ✅ FIX
         return;
       }
