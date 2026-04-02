@@ -102,41 +102,47 @@ const WorkerDashboard = () => {
   const fetchApplication = async () => {
     try {
       const storedData = JSON.parse(localStorage.getItem("workerData"));
-      if (!storedData) return;
+
+      if (!storedData) {
+        console.warn("No stored data");
+        setLoading(false); // ✅ FIX
+        return;
+      }
 
       const reference =
-  storedData?.application?.reference ||
-  storedData?.reference ||
-  storedData?.reference_number;
+        storedData?.application?.reference ||
+        storedData?.reference ||
+        storedData?.reference_number;
 
-if (!reference) {
-  console.warn("No reference found, skipping API call");
-  return;
-}
+      if (!reference) {
+        console.warn("No reference found");
+        setLoading(false); // ✅ FIX
+        return;
+      }
 
-     const res = await axios.get(
-  `${process.env.REACT_APP_API_URL}/api/workers/application/reference/${reference}`
-  
-);
+      const res = await axios.get(
+        `${process.env.REACT_APP_API_URL}/api/workers/application/reference/${reference}`
+      );
 
-// 🚨 BLOCK BAD RESPONSE
-if (!res.data || typeof res.data !== "object") {
-  console.error("❌ API returned HTML, ignoring...");
-  return; // DO NOT overwrite state
-}
+      // 🚨 BLOCK BAD RESPONSE
+      if (!res.data || typeof res.data !== "object") {
+        console.error("❌ API returned HTML, ignoring...");
+        setLoading(false); // ✅ FIX
+        return;
+      }
 
-
-     setApplication(res.data);
-localStorage.setItem("workerData", JSON.stringify(res.data));
+      setApplication(res.data);
+      localStorage.setItem("workerData", JSON.stringify(res.data));
 
     } catch (err) {
-      console.error(err);
+      console.error("API error:", err);
+    } finally {
+      setLoading(false); // ✅ ALWAYS RUNS
     }
   };
 
   fetchApplication();
 }, []);
-
 
   useEffect(() => {
   if (!application?.application?.status) return;
