@@ -117,18 +117,8 @@ if (!reference) {
   `${process.env.REACT_APP_API_URL}/api/workers/application/reference/${reference}`
 );
 
-      setApplication(res.data);
-
-      localStorage.setItem(
-  "workerData",
-  JSON.stringify({
-    ...storedData,
-    application: res.data,
-  })
-);
-
-      // ✅ update localStorage with fresh data
-      localStorage.setItem("workerData", JSON.stringify(res.data));
+     setApplication(res.data);
+localStorage.setItem("workerData", JSON.stringify(res.data));
 
     } catch (err) {
       console.error(err);
@@ -205,7 +195,9 @@ if (!reference) {
     medical_done: 4,
     approved: 5,
   };
-
+if (!application || !application.application) {
+  return <div>Loading dashboard...</div>;
+}
  return (
   <div className={`dashboard-container ${darkMode ? "dark" : ""}`}>
 
