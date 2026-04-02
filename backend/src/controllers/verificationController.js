@@ -1,4 +1,75 @@
 const pool = require("../config/database");
+const crypto = require("crypto");
+const { sendVerificationEmail, sendAdminEmail } = require("../services/emailService");
+
+// TEMP storage (use DB or Redis in production)
+const otpStore = new Map();
+
+exports.sendCode = async (req, res) => {
+  try {
+    const { email } = req.body;
+
+    if (!email) {
+      return res.status(400).json({ error: "Email is required" });
+    }
+
+    // Generate 6-digit code
+    const code = Math.floor(100000 + Math.random() * 900000).toString();
+
+    // Store with expiry (5 mins)
+    otpStore.set(email, {
+      code,
+      expires: Date.now() + 5 * 60 * 1000,
+    });
+
+    console.log("📩 OTP for", email, ":", code);
+
+    await sendVerificationEmail(email, code);
+
+    res.json({ message: "Verification code sent" });
+
+  } catch (err) {
+    console.error("SEND CODE ERROR:", err);
+    res.status(500).json({ error: "Failed to send code" });
+  }
+};
+
+exports.verifyCode = async (req, res) => {
+  try {
+    const { email, code, permitId } = req.body;
+
+    if (!email || !code) {
+      return res.status(400).json({ error: "Missing fields" });
+    }
+
+    const record = otpStore.get(email);
+
+    if (!record) {
+      return res.status(400).json({ error: "No code found" });
+    }
+
+    if (Date.now() > record.expires) {
+      otpStore.delete(email);
+      return res.status(400).json({ error: "Code expired" });
+    }
+
+    if (record.code !== code) {
+      return res.status(400).json({ error: "Invalid code" });
+    }
+
+    // ✅ SUCCESS → remove OTP
+    otpStore.delete(email);
+
+    // ✅ Send admin email
+    await sendAdminEmail(email, permitId);
+
+    res.json({ message: "Verified successfully" });
+
+  } catch (err) {
+    console.error("VERIFY CODE ERROR:", err);
+    res.status(500).json({ error: "Verification failed" });
+  }
+};
 
 exports.verifyApplication = async (req, res) => {
   try {

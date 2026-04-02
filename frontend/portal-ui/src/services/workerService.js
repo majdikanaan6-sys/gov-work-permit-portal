@@ -12,10 +12,10 @@ console.log("API URL:", API_URL);
 
 // ✅ SEND OTP CODE
 export const sendCode = async (email) => {
-  console.log("🚀 Sending request to:", `${API_URL}/api/send-code`);
+  console.log("🚀 Sending request to:", `${API_URL}/api/verification/send-code`);
 
   try {
-    const response = await axios.post(`${API_URL}/api/send-code`, {
+    const response = await axios.post(`${API_URL}/api/verification/send-code`, {
       email,
     });
 

@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import "./help.css";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
+import { sendCode } from "../services/workerService";
 
 
 
@@ -48,7 +49,8 @@ useEffect(() => {
   }
 }, []);
 
- const handleSendCode = async () => {
+console.log("🔥 SEND CODE HIT", req.body);
+const handleSendCode = async () => {
   if (!isEmailValid) {
     setError("Enter a valid email first");
     return;
@@ -58,23 +60,15 @@ useEffect(() => {
     setLoading(true);
     setError("");
 
-    const res = await fetch(`${API_URL}/api/verify-code`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ email }),
-    });
-
-    const data = await res.json();
-
-    if (!res.ok) throw new Error(data.error || "Failed");
+    await sendCode(email); // ✅ USE YOUR SERVICE
 
     setCodeSent(true);
     setCooldown(30);
 
   } catch (err) {
-    setError("Failed to send verification code");
+    setError(
+      err.response?.data?.error || "Failed to send verification code"
+    );
   } finally {
     setLoading(false);
   }
@@ -92,7 +86,7 @@ const handleVerifyAndRequest = async (e) => {
     setLoading(true);
     setError("");
 
-    const res = await fetch(`${API_URL}/api/send-code`, {
+    const res = await fetch(`${API_URL}/api/verification/verify-code`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
