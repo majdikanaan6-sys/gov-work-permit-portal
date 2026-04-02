@@ -7,7 +7,7 @@ const { getApplicationByEmail } = require("../controllers/workerController");
 
 router.get("/application/reference/:reference", async (req, res) => {
   try {
-    const { ref } = req.params;
+    const { reference } = req.params;
     console.log("✅ HIT:", reference);
 
     const result = await pool.query(`
