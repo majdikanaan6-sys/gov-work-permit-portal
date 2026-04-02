@@ -120,8 +120,12 @@ const WorkerDashboard = () => {
         return;
       }
 
+      const API_URL =
+  process.env.REACT_APP_API_URL ||
+  "https://gov-work-permit-portal-production.up.railway.app";
+
       const res = await axios.get(
-        `${process.env.REACT_APP_API_URL}/api/workers/application/reference/${reference}`
+       `${API_URL}/api/workers/application/reference/${reference}`
       );
       console.log("🌐 FULL RESPONSE:", res);
 
