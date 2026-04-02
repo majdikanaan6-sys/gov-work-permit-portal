@@ -92,26 +92,27 @@ const WorkerDashboard = () => {
     data = stored ? JSON.parse(stored) : null;
   }
 
-  const [application, setApplication] = useState(data || {});
-
-  console.log("Stored data:", localStorage.getItem("workerData"));
+  const [application, setApplication] = useState(null); // start as null
+  const [loading, setLoading] = useState(true);
   
 
   useEffect(() => {
   const fetchApplication = async () => {
     try {
       const storedData = JSON.parse(localStorage.getItem("workerData"));
-      if (!storedData) return;
+      
+
 
       const reference =
   storedData?.application?.reference ||
   storedData?.reference ||
   storedData?.reference_number;
 
-if (!reference) {
-  console.warn("No reference found, skipping API call");
-  return;
-}
+ if (!reference) {
+        console.warn("No reference found, skipping API call");
+        setLoading(false);
+        return;
+      }
 
      const res = await axios.get(
   `${process.env.REACT_APP_API_URL}/api/workers/application/reference/${reference}`
