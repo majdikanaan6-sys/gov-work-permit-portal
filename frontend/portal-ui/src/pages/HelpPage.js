@@ -4,7 +4,9 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import { sendCode } from "../services/workerService";
 
-
+const API_URL =
+  process.env.REACT_APP_API_URL ||
+  "https://gov-work-permit-portal-production.up.railway.app";
 
 
 
@@ -49,7 +51,7 @@ useEffect(() => {
   }
 }, []);
 
-console.log("🔥 SEND CODE HIT", req.body);
+console.log("🔥 SEND CODE CLICKED", email);
 const handleSendCode = async () => {
   if (!isEmailValid) {
     setError("Enter a valid email first");
