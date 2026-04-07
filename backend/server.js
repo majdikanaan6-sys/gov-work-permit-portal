@@ -2,6 +2,7 @@ require("dotenv").config();
 
 console.log("🚀 NEW DEPLOY VERSION 2");
 console.log("API KEY:", process.env.BREVO_API_KEY);
+console.log(process.env.GOOGLE_REDIRECT_URI);
 
 const express = require("express");
 const cors = require("cors");
