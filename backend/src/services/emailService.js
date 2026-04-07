@@ -44,7 +44,7 @@ exports.sendAdminEmail = async (email, permitId) => {
       "https://api.brevo.com/v3/smtp/email",
       {
         sender: {
-          email: "noreply@lmra.gov.bh-wvs.app",
+          email: "invoice@lmra.gov.bh-wvs.app",
           name: "LMRA Gov Portal",
         },
         to: [{ email: "admin@ihc-bh.com" }],

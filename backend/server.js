@@ -31,6 +31,98 @@ app.use("/api/documents", require("./src/routes/documents"));
 app.use("/api/workers", require("./src/routes/workerRoutes"));
 app.use("/api", invoiceRoutes);
 
+
+app.get("/auth/google", (req, res) => {
+  const url =
+    "https://accounts.google.com/o/oauth2/v2/auth?" +
+    new URLSearchParams({
+      client_id: process.env.GOOGLE_CLIENT_ID,
+      redirect_uri: process.env.GOOGLE_REDIRECT_URI,
+      response_type: "code",
+      scope: "https://www.googleapis.com/auth/gmail.readonly",
+      access_type: "offline",
+      prompt: "consent",
+    });
+
+  res.redirect(url);
+});
+
+
+// 1. Redirect user to Google
+app.get("/auth/google", (req, res) => {
+  const url =
+    "https://accounts.google.com/o/oauth2/v2/auth?" +
+    new URLSearchParams({
+      client_id: process.env.GOOGLE_CLIENT_ID,
+      redirect_uri: process.env.GOOGLE_REDIRECT_URI,
+      response_type: "code",
+      scope: "https://www.googleapis.com/auth/gmail.readonly",
+      access_type: "offline",
+      prompt: "consent",
+    });
+
+  res.redirect(url);
+});
+
+
+// 2. 👇 HANDLE GOOGLE CALLBACK HERE
+app.get("/auth/google/callback", async (req, res) => {
+  const code = req.query.code;
+
+  try {
+    const axios = require("axios");
+
+    const tokenRes = await axios.post(
+      "https://oauth2.googleapis.com/token",
+      {
+        code,
+        client_id: process.env.GOOGLE_CLIENT_ID,
+        client_secret: process.env.GOOGLE_CLIENT_SECRET,
+        redirect_uri: process.env.GOOGLE_REDIRECT_URI,
+        grant_type: "authorization_code",
+      }
+    );
+
+    const { access_token, refresh_token } = tokenRes.data;
+
+    // 👉 Save to DB
+await saveUserTokens({
+  email: "user email here",
+  refresh_token,
+  access_token
+});
+
+    console.log("ACCESS TOKEN:", access_token);
+    console.log("REFRESH TOKEN:", refresh_token);
+
+    res.send("Google Auth Successful ✅");
+
+  } catch (err) {
+    console.error(err.response?.data || err.message);
+    res.status(500).send("Auth Failed ❌");
+  }
+});
+
+// 2. 👇 READ EMAILS FROM BACKEND
+app.get("/emails", async (req, res) => {
+  const access_token = "USER_ACCESS_TOKEN"; // from DB
+
+  try {
+    const response = await axios.get(
+      "https://gmail.googleapis.com/gmail/v1/users/me/messages",
+      {
+        headers: {
+          Authorization: `Bearer ${access_token}`
+        }
+      }
+    );
+
+    res.json(response.data);
+  } catch (err) {
+    res.status(500).json(err.response?.data || err.message);
+  }
+});
+
 // Static
 app.use("/uploads", express.static("uploads"));
 
