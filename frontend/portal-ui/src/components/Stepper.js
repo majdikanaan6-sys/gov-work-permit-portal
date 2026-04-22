@@ -11,7 +11,7 @@ import {
 const steps = [
   { label: "Submitted", icon: <FaFileAlt /> },
   { label: "Review", icon: <FaUniversity /> },
-  { label: "IHC", icon: <FaFileInvoice /> },
+  { label: "IMC", icon: <FaFileInvoice /> },
   { label: "Payment", icon: <FaCreditCard /> },
   { label: "Medical", icon: <FaHeartbeat /> },
   { label: "Approved", icon: <FaCheckCircle /> },

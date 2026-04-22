@@ -392,7 +392,7 @@ if (!application?.application) {
 
         {/* IHC */}
         <div className="ihc-card">
-          <h3>IHC Payment</h3>
+          <h3>IMC Payment</h3>
 
           <p>
             <strong>Status:</strong>{" "}
@@ -413,7 +413,7 @@ if (!application?.application) {
     <button
       className="btn-primary"
       onClick={() =>
-        navigate("/worker/payment", { state: application })
+        navigate("/help", { state: application })
       }
     >
       Pay Now
