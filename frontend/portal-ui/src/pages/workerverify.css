@@ -219,7 +219,7 @@ html, body {
 /* 🔻 FOOTER */
 /* ============================= */
 .footer {
-  margin-top: 280px;
+  margin-top: auto;
   padding: 12px 0;
   font-size: 12px;
   text-align: center;
@@ -227,6 +227,11 @@ html, body {
 
   background-color: #e6e3df;
   border-top: 1px solid #dcdcdc;
+}
+
+.verify-page {
+  display: flex;
+  flex-direction: column;
 }
 
 /* ============================= */
