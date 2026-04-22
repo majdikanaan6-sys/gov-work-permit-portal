@@ -148,18 +148,18 @@ exports.verifyApplication = async (req, res) => {
     let data = result.rows[0];
 
     // 4️⃣ SAFE AUTO-SYNC STATUS
-    if (data.payment_status === "PAID" && data.status !== "IHC_REQUIRED") {
+    if (data.payment_status === "PAID" && data.status !== "IMC_REQUIRED") {
       try {
         await pool.query(
           `
           UPDATE work_permit_applications
-          SET status = 'IHC_REQUIRED'
+          SET status = 'IMC_REQUIRED'
           WHERE id = $1
           `,
           [data.application_id]
         );
 
-        data.status = "IHC_REQUIRED";
+        data.status = "IMC_REQUIRED";
       } catch (updateError) {
         console.error("STATUS UPDATE ERROR:", updateError);
       }

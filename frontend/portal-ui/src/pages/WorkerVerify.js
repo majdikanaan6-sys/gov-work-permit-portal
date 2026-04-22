@@ -82,7 +82,7 @@ const WorkerVerify = () => {
           <div className="login-body">
             <div className="form-group-wrapper">
 
-            <label>Permit ID</label>
+            <label>Entry Permit Reference Number</label>
             <input
               type="text"
               value={permitId}
