@@ -243,6 +243,13 @@ html, body {
   .login-box {
     width: 90%;
   }
+
+    /* 🔥 Fix banner height on mobile */
+  .header-banner img {
+    height: 90px;
+    object-fit: cover;
+  }
+
 }
 
 .form-group-wrapper {
