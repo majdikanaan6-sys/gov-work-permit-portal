@@ -2,64 +2,108 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin: 50px 0;
-  padding: 20px;
+  margin: 40px 0;
+  padding: 10px 0;
+  width: 100%;
 }
 
+/* Each step */
 .step-wrapper {
   display: flex;
   flex-direction: column;
   align-items: center;
   position: relative;
   flex: 1;
+  min-width: 80px; /* prevents collapse */
 }
 
+/* Circle */
 .step-circle {
-  width: 50px;
-  height: 50px;
+  width: 46px;
+  height: 46px;
   border-radius: 50%;
-  background-color: #e0e0e0;
+  background: #e0e0e0;
+
   display: flex;
   align-items: center;
   justify-content: center;
+
   font-size: 18px;
   color: #555;
+
   transition: all 0.3s ease;
   z-index: 2;
 }
 
-.step-circle.completed {
-  background-color: #28a745;
-  color: white;
-}
-
-.step-circle.active {
-  background-color: #007bff;
-  color: white;
-  transform: scale(1.1);
-}
-
 .step-circle svg {
-  font-size: 20px;
+  font-size: 18px;
 }
 
+/* Completed */
+.step-circle.completed {
+  background: #28a745;
+  color: white;
+}
+
+/* Active */
+.step-circle.active {
+  background: #2f74d0;
+  color: white;
+  transform: scale(1.08);
+}
+
+/* Label */
 .step-label {
-  margin-top: 10px;
-  font-size: 13px;
+  margin-top: 8px;
+  font-size: 12px;
   text-align: center;
   color: #333;
+  max-width: 70px;
 }
 
+/* Connecting line */
 .step-line {
   position: absolute;
-  top: 25px;
-  right: -50%;
+  top: 23px;
+  left: 50%;
   width: 100%;
-  height: 4px;
-  background-color: #e0e0e0;
+  height: 3px;
+  background: #e0e0e0;
   z-index: 1;
 }
 
 .step-line.completed {
-  background-color: #28a745;
+  background: #28a745;
+}
+
+.step-wrapper:last-child .step-line {
+  display: none;
+}
+
+/* ========================= */
+/* 📱 MOBILE FIX */
+/* ========================= */
+
+@media (max-width: 768px) {
+
+  .stepper-container {
+    overflow-x: auto;
+    padding-bottom: 10px;
+    gap: 20px;
+  }
+
+  .step-wrapper {
+    min-width: 90px;
+  }
+
+  .step-circle {
+    width: 42px;
+    height: 42px;
+    font-size: 16px;
+  }
+
+  .step-label {
+    font-size: 11px;
+  }
+
 }

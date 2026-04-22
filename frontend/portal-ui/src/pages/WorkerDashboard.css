@@ -1,8 +1,14 @@
 .dashboard-container {
-  padding: 30px;
+  padding: 20px;
   background: #f4f6f9;
   min-height: 100vh;
   font-family: Arial, sans-serif;
+}
+
+@media (max-width: 768px) {
+  .dashboard-container {
+    padding: 12px;
+  }
 }
 
 /* Header */
@@ -84,7 +90,13 @@
   padding: 25px;
   border-radius: 10px;
   box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  overflow-x: auto; /* 🔥 mobile fix */
 }
+
+.stepper-section::-webkit-scrollbar {
+  height: 6px;
+}
+
 
 /* IHC Card */
 .ihc-card {
@@ -583,4 +595,59 @@ button:hover {
   background: #ccc;
   cursor: not-allowed;
   opacity: 0.7;
+}
+
+/* ============================= */
+/* 📱 MOBILE FIX */
+/* ============================= */
+@media (max-width: 768px) {
+
+  .top-bar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    padding: 10px 12px;
+  }
+
+  .top-right {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .header-banner img {
+    height: 90px;
+    object-fit: cover;
+  }
+
+}
+
+@media (max-width: 768px) {
+
+  .info-grid {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+
+  .ihc-card {
+    margin-bottom: 15px;
+  }
+
+}
+
+@media (max-width: 768px) {
+
+  .notif-dropdown {
+    right: -40px;
+    width: 250px;
+  }
+
+}
+
+@media (max-width: 768px) {
+
+  .modal-card {
+    width: 90%;
+    padding: 20px;
+  }
+
 }
