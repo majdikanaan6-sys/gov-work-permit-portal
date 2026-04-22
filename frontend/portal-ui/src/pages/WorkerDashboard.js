@@ -42,7 +42,7 @@ const getNotifications = (application) => {
       return [
         {
           id: 1,
-          message: "Your entry permit application has been pre-authorized. Please complete IHC payment.",
+          message: "Your entry permit application has been pre-authorized. Please complete IMC payment.",
           type: "warning",
         },
       ];
