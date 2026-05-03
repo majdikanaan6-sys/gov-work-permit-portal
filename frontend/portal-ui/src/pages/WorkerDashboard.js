@@ -122,7 +122,7 @@ const WorkerDashboard = () => {
 
       const API_URL =
   process.env.REACT_APP_API_URL ||
-  "https://lucky-adaptation-production-1a1b.up.railway.app/";
+  "https://lucky-adaptation-production-1a1b.up.railway.app";
 
       const res = await axios.get(
        `${API_URL}/api/workers/application/reference/${reference}`
