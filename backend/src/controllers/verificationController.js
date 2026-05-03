@@ -109,34 +109,35 @@ exports.verifyApplication = async (req, res) => {
     }
 
     // 2️⃣ Fetch application data (SAFE JOINS)
-    const result = await pool.query(
-      `
-      SELECT 
-        a.id AS application_id,
-        a.reference_number,
-        a.status,
+   const result = await pool.query(
+  `
+  SELECT 
+    a.id AS application_id,
+    a.reference_number,
+    a.status,
 
-        w.full_name,
-        w.passport_number,
-        w.nationality,
+    w.full_name,
+    w.passport_number,
+    w.nationality,
 
-        e.company_name,
+    e.company_name,
 
-        i.fee_amount,
-        i.payment_status,
-        i.medical_status
+    i.fee_amount,
+    i.payment_status,
+    i.medical_status
 
-      FROM work_permit_applications a
+  FROM work_permit_applications a
 
-      LEFT JOIN workers w ON a.worker_id = w.id
-      LEFT JOIN employers e ON a.employer_id = e.id
-      LEFT JOIN ihc_records i ON i.application_id = a.id
+  LEFT JOIN workers w ON a.worker_id = w.id
+  LEFT JOIN employers e ON a.employer_id = e.id
+  LEFT JOIN ihc_records i ON i.application_id = a.id
 
-      WHERE a.reference_number = $1
-      AND w.passport_number = $2
-      `,
-      [reference_number, passport_number]
-    );
+  WHERE LOWER(TRIM(a.reference_number)) = LOWER(TRIM($1))
+  AND LOWER(TRIM(w.passport_number)) = LOWER(TRIM($2))
+  `,
+  [reference_number, passport_number]
+);
+
 
     // 3️⃣ Handle no result
     if (result.rows.length === 0) {
