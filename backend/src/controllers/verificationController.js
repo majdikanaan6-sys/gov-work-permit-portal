@@ -107,7 +107,7 @@ exports.verifyApplication = async (req, res) => {
         message: "Reference number and passport number are required",
       });
     }
-
+console.log("INPUT:", reference_number, passport_number);
     // 2️⃣ Fetch application data (SAFE JOINS)
    const result = await pool.query(
   `
@@ -137,6 +137,9 @@ exports.verifyApplication = async (req, res) => {
   `,
   [reference_number, passport_number]
 );
+
+console.log("RESULT:", result.rows);
+console.log(req.body);
 
 
     // 3️⃣ Handle no result
