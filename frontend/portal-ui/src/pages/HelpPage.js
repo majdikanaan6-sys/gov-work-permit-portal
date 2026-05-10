@@ -49,13 +49,6 @@ console.log("📦 PERMIT ID BEING SENT:", permitId);
   }
 }, [permitId]);
 
-useEffect(() => {
-  const locked = localStorage.getItem("paymentLocked");
-
-  if (locked !== "true") {
-    navigate("/worker/dashboard", { state: { refresh: true } });
-  }
-}, []);
 
 console.log("🔥 SEND CODE CLICKED", email);
 const handleSendCode = async () => {
