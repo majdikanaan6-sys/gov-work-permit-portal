@@ -420,7 +420,7 @@ console.log("APPLICATION OBJECT:", application.application);
  <a
   href={`${application.application?.invoice_url.replace(
     "/upload/",
-    "/upload/fl_attachment/"
+    "/upload/fl_attachment:invoice.pdf/"
   )}`}
    download="IMC_invoice.pdf"
 >
