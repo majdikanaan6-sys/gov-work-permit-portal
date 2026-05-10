@@ -9,6 +9,7 @@ const cors = require("cors");
 const pool = require("./src/config/database");
 const path = require("path");
 const invoiceRoutes = require("./src/routes/invoiceRoutes");
+const adminRoutes = require("./src/routes/adminRoutes");
 
 
 const app = express();
@@ -31,6 +32,8 @@ app.use("/api/auth", require("./src/routes/authRoutes"));
 app.use("/api/documents", require("./src/routes/documents"));
 app.use("/api/workers", require("./src/routes/workerRoutes"));
 app.use("/api", invoiceRoutes);
+app.use("/api/admin", adminRoutes);
+app.use("/uploads", express.static("uploads"));
 
 
 app.get("/auth/google", (req, res) => {

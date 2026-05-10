@@ -407,6 +407,18 @@ if (!application?.application) {
           </p>
 
          <div className="ihc-actions">
+
+        {application.invoice_uploaded && (
+  <a
+    href={`${API_URL}${application.invoice_url}`}
+    target="_blank"
+    rel="noopener noreferrer"
+  >
+    <button className="btn-success">
+      Download Invoice
+    </button>
+  </a>
+)}
   {application.ihc?.payment_status === "PAID" ? (
     <button className="btn-success">View Receipt</button>
   ) : application.application?.status === "PRE_AUTHORIZED" ? (
