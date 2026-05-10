@@ -227,6 +227,9 @@ if (!application?.application) {
   return <div>No application data found</div>;
 }
 
+console.log("FULL APPLICATION:", application);
+console.log("APPLICATION OBJECT:", application.application);
+
  return (
   <div className={`dashboard-container ${darkMode ? "dark" : ""}`}>
 
