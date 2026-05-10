@@ -10,7 +10,7 @@ exports.uploadInvoice = async (req, res) => {
         error: "No invoice uploaded",
       });
     }
-
+    console.log("UPLOADED FILE:", req.file);
     const invoiceUrl = req.file.path;
     
     // UPDATE DATABASE
