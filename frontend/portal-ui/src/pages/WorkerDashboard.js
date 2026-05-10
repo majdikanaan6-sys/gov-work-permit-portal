@@ -422,8 +422,7 @@ console.log("APPLICATION OBJECT:", application.application);
     "/upload/",
     "/upload/fl_attachment/"
   )}`}
-  target="_blank"
-  rel="noopener noreferrer"
+   download="IMC_invoice.pdf"
 >
   <button className="btn-success">
     Download Invoice
