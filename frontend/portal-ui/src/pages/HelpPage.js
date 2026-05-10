@@ -131,16 +131,18 @@ localStorage.removeItem("paymentAttempts");
       
       <div className="help-card">
         
-        <h2>Payment Assistance</h2>
+      <h2>Payment Assistance</h2>
 
-        {!submitted ? (
-          <>
-            <p className="help-text">
-              <br />
-              Please request a manual invoice to complete your payment.
-            </p>
+{!submitted ? (
+  <>
+    <p className="help-text">
+      <br />
+      Please request a manual invoice to complete your payment.
+      <br /><br />
+      Payment must be completed within 24 hours of invoice issuance to avoid possible cancellation of the application.
+    </p>
 
-          <form onSubmit={handleVerifyAndRequest}>
+    <form onSubmit={handleVerifyAndRequest}>
 
   {/* EMAIL */}
   <div className="input-group">
