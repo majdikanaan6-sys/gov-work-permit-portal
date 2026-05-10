@@ -58,7 +58,9 @@ router.get("/application/reference/:reference", async (req, res) => {
       application: {
         id: row.id,
         reference: row.reference_number,
-        status: row.status
+        status: row.status,
+        invoice_uploaded: row.invoice_uploaded,
+        invoice_url: row.invoice_url
       },
       worker: {
         name: row.worker_name,
