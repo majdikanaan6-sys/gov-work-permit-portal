@@ -20,10 +20,11 @@ const {
 
 const storage = new CloudinaryStorage({
   cloudinary,
-  params: {
+  params: async (req, file) => ({
     folder: "invoices",
-    resource_type: "auto",
-  },
+    resource_type: "raw",
+    public_id: `${Date.now()}-${file.originalname}`,
+  }),
 });
 
 const upload = multer({ storage });
