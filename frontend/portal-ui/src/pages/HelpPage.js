@@ -136,7 +136,6 @@ localStorage.removeItem("paymentAttempts");
         {!submitted ? (
           <>
             <p className="help-text">
-              You have reached the maximum number of payment attempts.
               <br />
               Please request a manual invoice to complete your payment.
             </p>
