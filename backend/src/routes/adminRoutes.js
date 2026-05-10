@@ -41,15 +41,34 @@ router.post(
 
 router.get("/download-invoice/:filename", (req, res) => {
 
-  const path = require("path");
+  try {
 
-  const filePath = path.join(
-    __dirname,
-    "../../uploads/invoices",
-    req.params.filename
-  );
+    const filePath = path.join(
+      process.cwd(),
+      "uploads",
+      "invoices",
+      req.params.filename
+    );
 
-  res.download(filePath);
+    console.log("DOWNLOAD PATH:", filePath);
+
+    if (!fs.existsSync(filePath)) {
+      return res.status(404).json({
+        error: "File not found",
+      });
+    }
+
+    res.download(filePath);
+
+  } catch (err) {
+
+    console.error("DOWNLOAD ERROR:", err);
+
+    res.status(500).json({
+      error: "Internal Server Error",
+    });
+
+  }
 
 });
 module.exports = router;
