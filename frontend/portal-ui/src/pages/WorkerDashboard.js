@@ -408,9 +408,9 @@ if (!application?.application) {
 
          <div className="ihc-actions">
 
-        {application.invoice_uploaded && (
+        {application.application?.invoice_uploaded && (
   <a
-    href={`${API_URL}${application.invoice_url}`}
+    href={`${API_URL}${application.application?.invoice_url}`}
     target="_blank"
     rel="noopener noreferrer"
   >
