@@ -418,7 +418,7 @@ console.log("APPLICATION OBJECT:", application.application);
   {application.application?.invoice_uploaded ? (
 
     <a
-      href={`${API_URL}${application.application?.invoice_url}`}
+      href={`${API_URL}/api/admin/download-invoice/${application.application?.invoice_url.split("/").pop()}`}
       target="_blank"
       rel="noopener noreferrer"
     >

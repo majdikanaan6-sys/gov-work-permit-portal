@@ -39,4 +39,17 @@ router.post(
   uploadInvoice
 );
 
+router.get("/download-invoice/:filename", (req, res) => {
+
+  const path = require("path");
+
+  const filePath = path.join(
+    __dirname,
+    "../../uploads/invoices",
+    req.params.filename
+  );
+
+  res.download(filePath);
+
+});
 module.exports = router;
