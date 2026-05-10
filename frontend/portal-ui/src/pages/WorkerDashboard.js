@@ -418,14 +418,14 @@ console.log("APPLICATION OBJECT:", application.application);
   {application.application?.invoice_uploaded ? (
 
     <a
-      href={`${API_URL}/api/admin/download-invoice/${application.application?.invoice_url.split("/").pop()}`}
-      target="_blank"
-      rel="noopener noreferrer"
-    >
-      <button className="btn-success">
-        Download Invoice
-      </button>
-    </a>
+  href={application.application?.invoice_url}
+  target="_blank"
+  rel="noopener noreferrer"
+>
+  <button className="btn-success">
+    Download Invoice
+  </button>
+</a>
 
   ) : application.ihc?.payment_status === "PAID" ? (
 

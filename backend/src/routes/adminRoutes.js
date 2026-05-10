@@ -5,8 +5,12 @@ const fs = require("fs");
 
 const router = express.Router();
 
-const uploadPath = "uploads/invoices";
+const cloudinary = require("../config/cloudinary");
 
+const { CloudinaryStorage } =
+  require("multer-storage-cloudinary");
+
+  
 const {
   uploadInvoice,
 } = require("../controllers/adminController");
@@ -15,19 +19,15 @@ const {
 
 // Create folder if missing
 if (!fs.existsSync(uploadPath)) {
-  fs.mkdirSync(uploadPath, { recursive: true });
+  ;
 }
 
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, "uploads/invoices");
-  },
-
-  filename: function (req, file, cb) {
-    cb(
-      null,
-      Date.now() + path.extname(file.originalname)
-    );
+const storage = new CloudinaryStorage({
+  cloudinary,
+  params: {
+    folder: "invoices",
+    resource_type: "raw",
+    format: async () => "pdf",
   },
 });
 

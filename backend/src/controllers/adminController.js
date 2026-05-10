@@ -11,9 +11,8 @@ exports.uploadInvoice = async (req, res) => {
       });
     }
 
-    const invoiceUrl =
-      `/uploads/invoices/${req.file.filename}`;
-
+    const invoiceUrl = req.file.path;
+    
     // UPDATE DATABASE
     const result = await pool.query(
       `
