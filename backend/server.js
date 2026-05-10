@@ -14,6 +14,9 @@ const adminRoutes = require("./src/routes/adminRoutes");
 
 const app = express();
 
+app.use("/uploads", express.static("uploads"));
+
+
 // Middleware
 app.use(cors());
 app.use(express.json());
@@ -33,7 +36,7 @@ app.use("/api/documents", require("./src/routes/documents"));
 app.use("/api/workers", require("./src/routes/workerRoutes"));
 app.use("/api", invoiceRoutes);
 app.use("/api/admin", adminRoutes);
-app.use("/uploads", express.static("uploads"));
+
 
 
 app.get("/auth/google", (req, res) => {
