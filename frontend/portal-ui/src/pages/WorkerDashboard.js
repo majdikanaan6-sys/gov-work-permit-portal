@@ -417,8 +417,8 @@ console.log("APPLICATION OBJECT:", application.application);
 
   {application.application?.invoice_uploaded ? (
 
-    <a
-  href={application.application?.invoice_url}
+   <a
+  href={`${application.application?.invoice_url}?fl_attachment=true`}
   target="_blank"
   rel="noopener noreferrer"
 >
