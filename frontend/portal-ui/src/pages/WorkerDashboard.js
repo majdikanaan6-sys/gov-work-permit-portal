@@ -10,7 +10,7 @@ const API_URL =
   process.env.REACT_APP_API_URL ||
   "https://lucky-adaptation-production-1a1b.up.railway.app";
 
-  
+
 
 const getInitials = (name) => {
   if (!name) return "W";
@@ -413,24 +413,28 @@ console.log("APPLICATION OBJECT:", application.application);
             {application.ihc?.fee ? `BHD ${application.ihc.fee}` : "N/A"}
           </p>
 
-         <div className="ihc-actions">
+<div className="ihc-actions">
 
-        {application.application?.invoice_uploaded && (
-  <a
-    href={`${API_URL}${application.application?.invoice_url}`}
-    target="_blank"
-    rel="noopener noreferrer"
-  >
+  {application.application?.invoice_uploaded ? (
+
+    <a
+      href={`${API_URL}${application.application?.invoice_url}`}
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      <button className="btn-success">
+        Download Invoice
+      </button>
+    </a>
+
+  ) : application.ihc?.payment_status === "PAID" ? (
+
     <button className="btn-success">
-      Download Invoice
+      View Receipt
     </button>
-  </a>
 
-  
-)}
-  {application.ihc?.payment_status === "PAID" ? (
-    <button className="btn-success">View Receipt</button>
   ) : application.application?.status === "PRE_AUTHORIZED" ? (
+
     <button
       className="btn-primary"
       onClick={() =>
@@ -439,16 +443,21 @@ console.log("APPLICATION OBJECT:", application.application);
     >
       Pay Now
     </button>
-    
+
   ) : application.application?.status === "PAYMENT_PENDING" ? (
+
     <button className="btn-disabled" disabled>
       Invoice Requested
     </button>
+
   ) : (
+
     <button disabled>No Action</button>
+
   )}
+
 </div>
-        </div>
+</div>
 
         <div className="info-card">
           <p className="label">Permit ID</p>
