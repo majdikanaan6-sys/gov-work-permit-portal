@@ -16,6 +16,8 @@ router.get("/application/reference/:reference", async (req, res) => {
         wpa.id,
         wpa.status,
         wpa.reference_number,
+        wpa.invoice_uploaded,
+        wpa.invoice_url,
         w.full_name AS worker_name,
         w.passport_number,
         w.nationality,

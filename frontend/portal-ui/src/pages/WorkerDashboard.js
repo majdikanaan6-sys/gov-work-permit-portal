@@ -418,6 +418,8 @@ if (!application?.application) {
       Download Invoice
     </button>
   </a>
+
+  
 )}
   {application.ihc?.payment_status === "PAID" ? (
     <button className="btn-success">View Receipt</button>
