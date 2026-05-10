@@ -23,6 +23,8 @@ const storage = new CloudinaryStorage({
   params: async (req, file) => ({
     folder: "invoices",
     resource_type: "raw",
+    type: "upload",
+    access_mode: "public",
     public_id: `${Date.now()}-${file.originalname}`,
   }),
 });
