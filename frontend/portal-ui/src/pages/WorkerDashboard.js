@@ -418,10 +418,9 @@ console.log("APPLICATION OBJECT:", application.application);
   {application.application?.invoice_uploaded ? (
 
  <a
-  href={application.application?.invoice_url.replace(
-    "/upload/",
-    "/upload/fl_attachment:invoice.pdf/"
-  )}
+  href={`${application.application?.invoice_url}?fl_attachment=invoice.pdf`}
+  target="_blank"
+  rel="noopener noreferrer"
 >
   <button className="btn-success">
     Download Invoice
