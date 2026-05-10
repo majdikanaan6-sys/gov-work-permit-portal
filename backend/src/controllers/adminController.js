@@ -1,4 +1,4 @@
-const WorkerApplication = require("../models/WorkPermitModel");
+const WorkerApplication = require("../models/workPermitModel");
 
 exports.uploadInvoice = async (req, res) => {
   try {
