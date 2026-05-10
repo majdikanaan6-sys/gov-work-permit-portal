@@ -22,8 +22,7 @@ const storage = new CloudinaryStorage({
   cloudinary,
   params: {
     folder: "invoices",
-    resource_type: "raw",
-    format: async () => "pdf",
+    resource_type: "auto",
   },
 });
 
