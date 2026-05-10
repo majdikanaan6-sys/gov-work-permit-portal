@@ -1,12 +1,22 @@
 const express = require("express");
 const multer = require("multer");
 const path = require("path");
+const fs = require("fs");
 
 const router = express.Router();
+
+const uploadPath = "uploads/invoices";
 
 const {
   uploadInvoice,
 } = require("../controllers/adminController");
+
+
+
+// Create folder if missing
+if (!fs.existsSync(uploadPath)) {
+  fs.mkdirSync(uploadPath, { recursive: true });
+}
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
